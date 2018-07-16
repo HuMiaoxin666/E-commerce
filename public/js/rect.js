@@ -2,22 +2,15 @@ var rectView = (function () {
 
     var minColor = "#A9B3FF";
     var maxColor = "#FF4B4C";
-    var colorArr = ["#D8D9FF", "#6EFCEE", "#72fb40","#F8EF48","#FE460B"];
     var tempdata = [];
     for (let i = 0; i < 168; i++) {
         tempdata.push(Math.random() * 1000);
     }
-    
     var maxData = d3.max(tempdata);
     var minData = d3.min(tempdata);
-    var cur_dif = maxData - minData;
     console.log('minData: ', minData);
     console.log('maxData: ', maxData);
     console.log('tempdata: ', tempdata);
-    var interval = [];
-    for(var i = 1; i<= 6;i++){
-        interval.push(cur_dif/6*i)
-    }
     hour = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"]
     date = ["Mon", "Thue", "Wed", "Thur", "Fri", "Sat", "Sun"]
     var svgHeight = $("#rectSvg")[0].clientHeight;
@@ -54,8 +47,8 @@ var rectView = (function () {
 
     //设置就矩阵图的颜色渐变
     var rectColorScale = d3.scaleLinear()
-        .domain(interval)
-        .range(["#D8D9FF", "#6EFCEE", "#72fb40","#F8EF48","#FE460B"]);
+        .domain([minData,maxData])
+        .range([0, 1]);
     var rectCompute = d3.interpolate(minColor,
         maxColor);
     //**矩阵绘制
@@ -75,7 +68,7 @@ var rectView = (function () {
             return i;
         })
         .style("fill", function (d) {
-            return (rectColorScale(d));
+            return rectCompute(rectColorScale(d));
         })
         .style("stroke",'white')
         .style("stroke-width",0.2);
