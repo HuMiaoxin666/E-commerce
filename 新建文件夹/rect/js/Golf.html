@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <style>
+  body{
+      font-family: "helvetica";
+      background-color: #fff;
+      margin:0;
+      padding:100px
+    }
+    svg {
+        box-sizing: content-box
+    }
+   .selected{
+      stroke: red;
+      fill: red
+    }
+    .axis path {
+        stroke: steelblue;
+        stroke-width: 1
+    }
+    .axis .tick line{
+      stroke: steelblue;
+      stroke-width: 1
+    }
+    #grid line {
+      stroke: #aaa;
+      stroke-width: 1
+    }
+    #grid .tick:nth-child(2) {
+      display: none
+    }
+    #grid path {
+      display: none
+    }
+    .line_y .domain{
+        stroke: yellow;
+        stroke-width: 2
+    }
+    .tooltip {
+        position: absolute;
+        min-width: 100px;
+        height: auto;
+        font-size: 14px;
+        text-align: center;
+        border: 1px solid #666;
+        border-radius: 5px;
+        color: #fff;
+        background:rgba(0, 0, 0, 0.8);
+        padding-bottom: 5px;
+        transition: transform 0.2s
+    }
+  </style>
+ 
+  <body>
+      <script src="https://d3js.org/d3.v4.min.js"></script>
+      <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <form name="selectform" action="" method="" style="position:absolute;top:50px;left:150px;">
+		<select id = "player" name = "player" >
+			  <option  id = '1-0' value="0">Luke Donald</option>   
+			  <option  id = '1-1' value="1">Webb Simpson</option>
+			  <option  id = '1-2' value="2">Nick Watney</option>   
+			  <option  id = '1-3' value="3">K.J. Choi</option>   
+			  <option  id = '1-4' value="4">Dustin Johnson</option>   
+			  <option  id = '1-5' value="5">Matt Kuchar</option>
+			  <option  id = '1-6' value="6">Bill Haas</option>   
+			  <option  id = '1-7' value="7">Steve Stricker</option> 
+			  <option  id = '1-8' value="8">Jason Day</option>   
+			  <option  id = '1-9' value="9">David Toms</option> 
+		</select>
+		<select id = "player1" name = "player1">
+			  <option  id = '2-0' value="0">Luke Donald</option>   
+			  <option  id = '2-1' value="1">Webb Simpson</option>
+			  <option  id = '2-2' value="2">Nick Watney</option>   
+			  <option  id = '2-3' value="3">K.J. Choi</option>   
+			  <option  id = '2-4' value="4">Dustin Johnson</option>   
+			  <option  id = '2-5' value="5">Matt Kuchar</option>
+			  <option  id = '2-6' value="6">Bill Haas</option>   
+			  <option  id = '2-7' value="7">Steve Stricker</option> 
+			  <option  id = '2-8' value="8">Jason Day</option>   
+			  <option  id = '2-9' value="9">David Toms</option> 
+		</select>
+	</form>
+    <script>
+		
+		function Type1(){
+			var mySelect1 = document.selectform.player.value;
+			
+			return mySelect1;
+		}
+		function Type2(){
+			var mySelect2 = document.selectform.player1.value;
+			return mySelect2;
+		}
+		const  line_data = [
+			{
+				player: "Luke Donald",
+				gdp: [
+						[2008, 2033],
+						[2009, 2400],
+						[2010, 4333],
+						[2011, 5600],
+						[2012, 6500],
+						[2013, 6700],
+						[2014, 6933],
+						[2015, 7400],
+						[2016, 7733],
+						[2017, 8200]
+					 ]
+			}
+
+		]
+		
+		const  line_data1 = [
+			{
+				player: "Luk Donald",
+				gdp: [
+						[2008, 2033],
+						[2009, 2400],
+						[2010, 4333],
+						[2011, 5600],
+						[2012, 6500],
+						[2013, 6700],
+						[2014, 6933],
+						[2015, 7400],
+						[2016, 7733],
+						[2017, 8200]
+					 ]
+			}
+
+		]
+		
+		var data = line_data;
+		var initWidth = 340
+		var initHeight = 500
+
+		var padding = { left:40, top:10, right:20, bottom: 20}
+
+		var height = initWidth - padding.top - padding.bottom
+		var width  = initHeight - padding.left - padding.right
+
+
+		var svg = d3.select("body")
+					.append("svg")
+					.attr("id", "chart")
+					.attr("width", width)
+					.attr("height", height)
+					.style("padding-left", padding.left)
+					.style("padding-right", padding.right)
+					.style("padding-top", padding.top)
+					.style("padding-bottom", padding.bottom)
+	for(var i = 1; i<=2;i++){
+    for(var j = 0;j<=9;j++){
+        $("#"+i+"-"+j).on("click",function(){
+        var mySelect1 = document.selectform.player.value;
+        console.log(mySelect1);
+      });
+    }
+  }
+		 //添加y轴坐标轴
+
+		//y轴比例尺
+		let nums = [...data[0]["gdp"]].map(function(e){
+			return e[1]
+		})
+	
+		let yScale = d3.scaleLinear()
+			.domain([0, d3.max(nums)])
+			.range([height , 0]);
+
+		let _yScale = d3.scaleLinear()
+			.domain([0, d3.max(nums)])
+			.range([0, height]);
+
+		//定义y轴
+		let yAxis = d3.axisLeft(yScale)
+						 .tickFormat(d3.format("d")); //把x,xxx 的数据计数方式格式化，转化为不带逗号的格式
+
+		//添加y轴
+		svg.append("g")
+			.attr("class","axis")
+			.attr("transform","translate(" + 0 + "," + 0 + ")")
+			.call(yAxis);
+
+		 //添加x轴坐标轴
+
+		//x轴比例尺
+		let years = data[0]["gdp"].map(function(e){
+					return e[0]
+			 })
+
+		let xScale =  d3.scaleLinear()
+						.domain([2008,2017])
+						.rangeRound([0, width])
+
+		let _xScale =  d3.scaleLinear()
+						.domain([0,width])
+						.rangeRound([2008, 2017])
+
+		//定义x轴
+		let xAxis = d3.axisBottom(xScale)
+							.tickFormat(d3.format("d"))
+
+		//添加x轴
+		svg.append("g")
+			.attr("class","axis")
+			.attr("transform","translate(" + "0 ," + height + ")")
+				.call(xAxis);
+
+
+        //添加
+        // gridlines in x axis function
+        function make_x_gridlines() {
+            return d3.axisBottom(xScale)
+                .ticks(years.length)
+
+        }
+
+        // add the X gridlines
+		var grid =  svg.append("g")
+            .attr("id", "grid")
+            .attr("transform", "translate(0," + height + ")")
+            .call(make_x_gridlines()
+                .tickSize(-height)
+                .tickFormat("")
+            )
+		//添加
+        // gridlines in y axis function
+        function make_y_gridlines() {
+            return d3.axisLeft(yScale)
+                .ticks(nums.length)
+
+        }
+
+        // add the Y gridlines
+		var grid =  svg.append("g")
+            .attr("id", "grid")
+            .attr("transform","translate(" + 0 + "," + 0 + ")")
+            .call(make_y_gridlines()
+                .tickSize(-width)
+                .tickFormat("")
+            )
+
+
+		//创建一个直线生成器
+        var linePath = d3.line()
+                          .curve(d3.curveCardinal.tension(0.5))
+                         .x( function(d){ return xScale(d[0]) })
+                         .y( function(d){ return yScale(d[1])})
+		
+
+
+
+        <!-- var colors = ["rgb(0, 188, 212)", "rgb(255, 64, 129)"] -->
+		var colors = ["rgb(0, 188, 212)"]
+
+
+        //添加路径
+        svg.append("g").selectAll("path")
+            .data(data)
+            .enter()
+            .append("path")
+            .attr("transform","translate(0, 0)")
+            .attr("d", function(d){
+                return linePath(d.gdp)
+            })
+            .attr("fill", "none")
+            .attr("stroke-width", "2px")
+            .attr("stroke", function(d, i){
+              return colors[i]
+            })
+			
+			
+			
+		var cover =svg.append("g")
+
+            cover.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("fill", function(d, i){
+                  return colors[i]
+                })
+                .attr("transform", function(d, i){
+                    return `translate(10, ${(i)*20})`
+                })
+
+
+            cover.selectAll("text")
+                  .data(data)
+                  .enter()
+                  .append("text")
+                  .text(function(d, i){
+                    return d.player
+                  })
+                  .attr("transform", function(d, i){
+                      return `translate(27, ${(i)*20})`
+                  })
+                  .attr("font-size", '12px')
+                  .attr("dy",function(){
+                    return '0.75em'
+                  })
+                  .attr("fill", function(){
+                    return '#333'
+                  })
+		<!-- //节流函数 -->
+		<!-- var throttle = function (fn, interval) { -->
+        <!-- var  timer, firstTime = true; -->
+
+        <!-- return function () { -->
+          <!-- var args = arguments; -->
+          <!-- var _me = this; -->
+
+           <!-- if ( firstTime ) { -->
+             <!-- fn.apply(_me, args) -->
+             <!-- return firstTime = false; -->
+           <!-- } -->
+
+           <!-- if ( timer ) { -->
+             <!-- return false -->
+           <!-- } -->
+
+           <!-- timer = setTimeout(function () { -->
+             <!-- clearTimeout(timer); -->
+             <!-- timer=null; -->
+             <!-- fn.apply(_me, args) -->
+           <!-- }, interval || 500) -->
+        <!-- } -->
+
+		<!-- } -->
+		<!-- var detailLine = svg.append("g") -->
+                            <!-- .attr("class","line_y") -->
+                            <!-- .attr("transform","translate(" + width + "," + 0 + ")") -->
+                            <!-- .call(yAxis.ticks(0).tickSize(0).tickFormat("")); -->
+
+        <!-- //添加提示栏 -->
+        <!-- var tooltip = d3.select("body") -->
+                        <!-- .append("div") -->
+                        <!-- .attr("class", "tooltip") -->
+                        <!-- .style("opacity", 0) -->
+
+        <!-- //计算位置 便于吸附 -->
+        <!-- let singleStep = width / (years.length-1) -->
+
+        <!-- //这里使用节流函数，避免过多运算导致浏览器卡顿 -->
+        <!-- document.getElementById('chart').onmousemove =throttle(function(e){ -->
+              <!-- console.log(e.offsetX) -->
+              <!-- e.stopPropagation(); -->
+              <!-- let t = Math.round((e.offsetX - padding.left) / singleStep)*singleStep -->
+              <!-- detailLine.attr("transform","translate(" + t + "," + 0 + ")") -->
+              <!-- let year = _xScale(t) -->
+              <!-- let currentHtml = [] -->
+              <!-- data.forEach( (e) => { -->
+                  <!-- e.gdp.forEach( (ev, i) =>{ -->
+                    <!-- if(ev[0]==year){ -->
+                      <!-- currentHtml.push('<div>${e.country}: ${ev[1]}</div>'); -->
+                    <!-- } -->
+                  <!-- }) -->
+              <!-- }) -->
+            <!-- currentHtml.unshift(`'div>${year}</div>') -->
+            <!-- tooltip.html(currentHtml.join("")) -->
+                   <!-- .style("left", e.pageX + 20+ "px") -->
+                   <!-- .style("top", e.pageY + 20 + "px") -->
+                   <!-- .style("opacity", 1) -->
+        <!-- },50) -->
+
+
+        <!-- //隐藏显示栏 -->
+        <!-- document.onclick= function(){ -->
+          <!-- tooltip.style("opacity", 0) -->
+        <!-- } -->
+
+		
+    </script>
+	</div>
+  </body>
+</html>

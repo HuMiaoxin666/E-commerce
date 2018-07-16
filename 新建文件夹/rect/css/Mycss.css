@@ -1,0 +1,165 @@
+.button {
+    background-color: #00BFFF	; /* Green */
+	border: 2px solid #27408B;
+	border-radius: 8px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+	outline:none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+	margin:5px  0px;	
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 2px #666;
+  transform: translateY(3px);
+}
+.tooltip{
+		position:absolute;
+		width:60px;
+		font-family:simsun;
+		font-size:13px;
+		text-align:center;
+		border-style:solid;
+		border-width:0px;
+		border-radius:5px;
+		z-index:11
+	}
+	
+	
+	.tooltip_line{
+		position:absolute;
+		width:60px;
+		height:auto;
+		font-family:simsun;
+		font-size:10px;
+		text-align:center;
+		border-style:solid;
+		border-width:0px;
+		border-radius:5px;
+		z-index:11
+	}
+	
+	#amount{
+		width:30px;
+		background-color:white;
+	}
+	div#button{
+		position:absolute;
+		left:10px;
+		top:10px;
+		width:80px;
+		height:350px;
+	}
+	div#button_rec{
+		position:absolute;
+		left:5px;
+		top:350px;
+		width:80px;
+		hieght:80px;
+	}
+	
+	div#button_force{
+		position:absolute;
+		left:5px;
+		top:410px;
+		width:80px;
+		hieght:80px;
+	}
+	div#Run_Community{
+		position:absolute;
+		left:5px;
+		top:460px;
+		width:80px;
+		hieght:80px;
+	}
+	.links line {
+	  stroke: #BF3EFF;
+	  stroke-opacity: 1;
+	}
+	#year_slider {
+		width: 13px;
+		hieght:100px;
+		left:30px;
+	}
+	
+	div#a_control{
+		background-color:none;
+		position:absolute;
+		height:200px;
+		left:10px;
+		top:570px;
+		z-index:11;
+	}
+	div#All{
+		border:1px solid #e3a2ff;
+		position:abosolute;
+		width:1345px;
+		height:940px;
+	}
+    div#select_year{
+		background-color:white;
+		border:1px solid #e3a2ff;
+		position:absolute;
+		margin-left:5px;
+		width:80px;
+		top:15px;
+		height:800px;
+    }
+	div#force{
+	background-color:white;
+	    border:1px solid #e3a2ff;
+		position:absolute;
+		left:690px;
+		top:15px;
+		width:650px;
+		height:550px;
+		z-index:1;
+	}
+	div#rec{
+	background-color:white;
+		border:1px solid #e3a2ff;
+		position:absolute;
+		top:15px;
+		left:130px;
+		height:550px;
+		z-index:2;
+	}
+	div#sankey{
+	background-color:white;
+		border:1px solid #e3a2ff;
+		position:absolute;
+		left:130px;
+		top:580px;
+	}
+	.nodes circle {
+		stroke-width: 1.5px;
+	}
+	rect.bordered {
+        stroke: #E6E6E6;
+        stroke-width:2px;   
+    }
+	.valueText {
+			font-family: arial;
+			font-size: 12px;
+			text-anchor: middle;
+	}
+
+    text.mono {
+        font-size: 9pt;
+        font-family: Consolas, courier;
+        fill: #aaa;
+    }
+
+    text.axis-workweek {
+        fill: #000;
+    }
+
+    text.axis-worktime {
+        fill: #000;
+    }

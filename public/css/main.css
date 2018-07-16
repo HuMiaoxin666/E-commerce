@@ -1,0 +1,25 @@
+#map {
+    width: 100%;
+    height: 70%;
+    position: absolute;
+}
+
+#main {
+    top: 0%;
+    right: 0%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#rect {
+    position: absolute;
+    bottom:0%;
+    width: 100%;
+    height: 30%;
+}
+#rectSvg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
