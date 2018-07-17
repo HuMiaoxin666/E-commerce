@@ -1,110 +1,157 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 col-2">
-    <a class="navbar-brand  col-md mr-0" href="#">海仓数据可视化</a>
+    <a class="navbar-brand  col-md mr-0" href="#" style="font-size:1.4em">海仓数据可视化</a>
 
 </nav>
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav class="col-md-2 d-none d-md-block  sidebar">
             <div class="sidebar-sticky">
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Warehouse</span>
-                    <a class="d-flex align-items-center text-muted" href="#">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" id = "wh_1">
-                            <span data-feather="home"></span>
-                            Unknown
-                            <span class="sr-only">(current)</span>
+                <div class="card box-shadow" style="border-top:none;padding-top:">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1.3em;">Warehouse</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id = "wh_2">
-                            <span data-feather="file"></span>
-                            unknown
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id = "wh_3">
-                            <span data-feather="shopping-cart"></span>
-                            Unknown
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id = "wh_4">
-                            <span data-feather="users"></span>
-                            Unknown
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"id = "wh_5">
-                            <span data-feather="bar-chart-2" ></span>
-                            杭州下沙
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id = "wh_6">
-                            <span data-feather="layers"></span>
-                            Unknown
-                        </a>
-                    </li>
-                </ul>
+                    </h6>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="wh_1">
+                                <span data-feather="home"></span>
+                                Unknown
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_2">
+                                <span data-feather="file"></span>
+                                Unknown
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_3">
+                                <span data-feather="shopping-cart"></span>
+                                Unknown
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_4">
+                                <span data-feather="users"></span>
+                                Unknown
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_5">
+                                <span data-feather="bar-chart-2"></span>
+                                杭州下沙
+                            </a>
+                        </li>
+                        <li class="nav-item" style="padding-bottom:.4em;">
+                            <a class="nav-link" href="#" id="wh_6">
+                                <span data-feather="layers"></span>
+                                Unknown
+                            </a>
+                        </li>
+                    </ul>
 
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>goods category</span>
-                    <a class="d-flex align-items-center text-muted" href="#">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"  id= "cg_1">
-                            <span data-feather="file-text"></span>
-                            服饰鞋靴
+                </div>
+
+
+                <div class="card box-shadow" style="border-top:none;padding-top:">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1.3em;">goods category</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"  id= "cg_2">
-                            <span data-feather="file-text"></span>
-                            环球美食
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_1">
+                                <span data-feather="file-text"></span>
+                                服饰鞋靴
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_2">
+                                <span data-feather="file-text"></span>
+                                环球美食
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_3">
+                                <span data-feather="file-text"></span>
+                                家具个护
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_4">
+                                <span data-feather="file-text"></span>
+                                美容彩妆
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_5">
+                                <span data-feather="file-text"></span>
+                                母婴儿童
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_6">
+                                <span data-feather="file-text"></span>
+                                营养保健
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card box-shadow" style="border-bottom:none;border-top:none;    border-bottom-right-radius:0">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1.3em;">order information</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"  id= "cg_3">
-                            <span data-feather="file-text"></span>
-                            家具个护
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"  id= "cg_4">
-                            <span data-feather="file-text"></span>
-                            美容彩妆
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"  id= "cg_5">
-                            <span data-feather="file-text"></span>
-                            母婴儿童
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"  id= "cg_6">
-                            <span data-feather="file-text"></span>
-                            营养保健
-                        </a>
-                    </li>
-                </ul>
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>order information</span>
-                    <a class="d-flex align-items-center text-muted" href="#">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-               
-            </div>
+                    </h6>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">订单编号</span>
+
+                    </h6>
+                    <div class="form-group" style="margin-bottom:0%;">
+                        <select class="form-control" style="font-size:.8rem;" id = "orderNum">
+                            <option></option>
+                        </select>
+                    </div>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">用户</span>
+                        <input type="text" class="inputText" id = "id">
+                    </h6>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">仓库</span>
+                        <input type="text" class="inputText"id = "warehouse">
+                    </h6>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">支付时间</span>
+                        <input type="text" class="inputText"id = "startTime">
+                    </h6>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">推送时间</span>
+                        <input type="text" class="inputText"id = "endTime">
+                    </h6>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">商品名称</span>
+                    </h6>
+                    <input type="text" class="inputText" style="font-size:.8em;"id = "name">
+                    </span>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">购买数量</span>
+                        <input type="text" class="inputText"id = "qty">
+                    </h6>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
+                        <span style="font-size:1em;">收货地址</span>
+                        <input type="text" class="inputText"id = "address">
+                    </h6>
+                </div>
+
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 " id="main" style="padding-left:0px;">
@@ -113,5 +160,5 @@
                 <svg id="rectSvg"></svg>
             </div>
         </main>
+        </div>
     </div>
-</div>
