@@ -1,8 +1,8 @@
 var mapView = (function () {
-    
+
     var map = L.map('map', {
         renderer: L.canvas()
-    }).setView([30.309882,120.376905], 5)
+    }).setView([30.309882, 120.376905], 5)
     var osmUrl = 'https://api.mapbox.com/styles/v1/keypro/cjjibvxa20ljx2slnphxjle4b/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2V5cHJvIiwiYSI6ImNqamliaTJtbjV0YTMzcG82bmthdW03OHEifQ.UBWsyfRiWMYly4gIc2H7cQ',
         layer = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
     L.tileLayer(osmUrl, {
@@ -13,47 +13,53 @@ var mapView = (function () {
         //访问令牌
     }).addTo(map);
     map.zoomControl.remove();
-    d3.csv("data/LocName.csv", function(error,data){
+    d3.csv("data/LocName.csv", function (error, data) {
         console.log(data);
         var pointLoc = [];
-        pointLoc = data.map(function(d){
-            d.latLng  = [+d.lat, +d.lng];
-            d.name = d["市"] + '、'+d['区'];
+        pointLoc = data.map(function (d) {
+            d.latLng = [+d.lat, +d.lng];
+            d.name = d["市"] + '、' + d['区'];
             return d;
         });
         console.log('pointLoc: ', pointLoc);
-        var d3Overlay = L.d3SvgOverlay(function(selection, projection){
+        var d3Overlay = L.d3SvgOverlay(function (selection, projection) {
 
             var updateSelection = selection.selectAll('circle').data(pointLoc);
             updateSelection.enter()
                 .append('circle')
                 .attr("r", 1)
-                .attr("cx", function(d) { return projection.latLngToLayerPoint(d.latLng).x })
-                .attr("cy", function(d) { return projection.latLngToLayerPoint(d.latLng).y })
-                .attr("fill",'#4AC2F1')
-                .attr("id", function(d){return d.name})
-                .attr("text",function(d){return d.name;})
+                .attr("cx", function (d) {
+                    return projection.latLngToLayerPoint(d.latLng).x
+                })
+                .attr("cy", function (d) {
+                    return projection.latLngToLayerPoint(d.latLng).y
+                })
+                .attr("fill", '#4AC2F1')
+                .attr("id", function (d) {
+                    return d.name
+                })
+                .attr("text", function (d) {
+                    return d.name;
+                })
                 .transition()
                 .duration(2000)
-                .attr("r",5)
-                .attr("fill",'red');
-            
+                .attr("r", 5);
+
         });
-        
+
         d3Overlay.addTo(map);
     });
-    
-    getChosenData(options.warehouse,options.type).then(function (suspedingData) {
-        
+    /*
+    getChosenData(options.warehouse, options.type).then(function (suspedingData) {
         console.log('suspedingData: ', suspedingData);
 
     });
-    
+*/
     function getAllData() {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/po_infor",
+                url: "/orderInfor",
                 success: function (data) {
                     resolve(data);
                 },
@@ -63,14 +69,20 @@ var mapView = (function () {
             });
         });
     }
-    function getChosenData(warehouse,type) {
+    function test(){
+        console.log("It work !");
+    }
+    function getChosenData(warehouse, type) {
+        console.log('type: ', type);
+        console.log('warehouse: ', warehouse);
+        console.log("It work !");
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/" + warehouse+'/'+type+"/po_infor",
-                data:{
+                url: "/" + "5" + '/' + "家具个护" + "/orderInfor",
+                data: {
                     warehouse: warehouse,
-                    type:type,
+                    type: type,
                 },
                 success: function (data) {
                     resolve(data);
@@ -81,7 +93,8 @@ var mapView = (function () {
             });
         });
     }
-
-
-   
+    return {
+        getChosenData: getChosenData,
+        test:test,
+    }
 })()

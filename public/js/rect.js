@@ -1,7 +1,7 @@
 var rectView = (function () {
 
-    var minColor = "#A9B3FF";
-    var maxColor = "#FF4B4C";
+    var minColor = "#FFF57B";
+    var maxColor = "#FE2D0B";
     var tempdata = [];
     for (let i = 0; i < 168; i++) {
         tempdata.push(Math.random() * 1000);

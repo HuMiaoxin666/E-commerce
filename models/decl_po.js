@@ -3,25 +3,27 @@ const Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
 const poSchema = new Schema({
-    ORDER_NO: String,
-    E_COMMERCE_CODE: String,
-    TRADE_TIME: String,
-    LOGIS_COMPANY_CODE: String,
-    ORDER_STATUS: Number,
-    WAYBILL_NO: String,
-    GROSS_WT: Number,
-    EXTEND1: String,
-    EXTEND5: String,
-    CONSIGNEE_PROVINCE: String,
-    CONSIGNEE_CITY: String,
-    CONSIGNEE_COUNTRY: String,
+    order_no: String,
+    e_com: String,
+    start_date: String,
+    start_hour: String,
+    LgCompany_code: String,
+    province: String,
+    city: String,
+    country: String,
     id: String,
-    THEORY_WT: Number,  
-    WAREHOUSE:String,
-    PUSH_TIME: String
+    warehouse: String,
+    end_date: String,
+    end_hour: String,
+    id: String,
+    name: String,  
+    qty:Number,
+    type: String,
+    lng:String,
+    lat:String,
 }, {
-    collection: 'decl_po'
+    collection: 'orderInfor'
 });
 
-var poModel = mongoose.model('decl_po', poSchema);
-module.exports = poModel;
+var OIModel = mongoose.model('orderInfor', poSchema);
+module.exports = OIModel;
