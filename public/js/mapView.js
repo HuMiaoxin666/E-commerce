@@ -2,7 +2,7 @@ var mapView = (function () {
 
     var map = L.map('map', {
         renderer: L.canvas()
-    }).setView([30.309882, 120.376905], 5)
+    }).setView([30.309882, 120.376905], 4)
     var osmUrl = 'https://api.mapbox.com/styles/v1/keypro/cjjibvxa20ljx2slnphxjle4b/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2V5cHJvIiwiYSI6ImNqamliaTJtbjV0YTMzcG82bmthdW03OHEifQ.UBWsyfRiWMYly4gIc2H7cQ',
         layer = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
     L.tileLayer(osmUrl, {
@@ -13,6 +13,8 @@ var mapView = (function () {
         //访问令牌
     }).addTo(map);
     map.zoomControl.remove();
+    //初始化界面
+    /*
     d3.csv("data/LocName.csv", function (error, data) {
         console.log(data);
         var pointLoc = [];
@@ -48,19 +50,41 @@ var mapView = (function () {
         });
 
         d3Overlay.addTo(map);
-    });
-    /*
-    getChosenData(options.warehouse, options.type).then(function (suspedingData) {
-        console.log('suspedingData: ', suspedingData);
+    });*/
+    
+    // getChosenData(options.WhStatus, options.type).then(function (suspedingData) {
+    //     console.log('suspedingData: ', suspedingData);
+    //     Heatmap(suspedingData);
+    //     DrawRectView(suspedingData);
+    // });
 
-    });
-*/
-    function getAllData() {
-        return new Promise(function (resolve, reject) {
+    function Heatmap(chosenData) {
+        console.log('chosenData: ', chosenData);
+        let container = $("#map").find("canvas");
+        container.remove();
+
+        let heatData = [];
+        for (var i = 0; i < chosenData.length; i++) {
+            chosenData[i]['lat'] = parseFloat(chosenData[i]['lat']);
+            chosenData[i]['lng'] = parseFloat(chosenData[i]['lng']);
+            heatData.push([chosenData[i]['lat'], chosenData[i]['lng']])
+        }
+        var heat = L.heatLayer(heatData, {
+                maxZoom: 17,
+                radius: 10
+            }).addTo(map),
+            draw = true;
+        heat.redraw();
+        heat.setLatLngs(heatData);
+        console.log('container: ', container);
+    }
+
+    function getAllData(){
+        return new Promise(function(resolve, reject){
             $.ajax({
                 type: "get",
                 url: "/orderInfor",
-                success: function (data) {
+                success: function (data){
                     resolve(data);
                 },
                 error: function () {
@@ -69,9 +93,11 @@ var mapView = (function () {
             });
         });
     }
-    function test(){
+
+    function test() {
         console.log("It work !");
     }
+
     function getChosenData(warehouse, type) {
         console.log('type: ', type);
         console.log('warehouse: ', warehouse);
@@ -79,7 +105,7 @@ var mapView = (function () {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/" + "5" + '/' + "家具个护" + "/orderInfor",
+                url: "/" + "warehouse" + '/' + "type" + "/orderInfor",
                 data: {
                     warehouse: warehouse,
                     type: type,
@@ -88,13 +114,14 @@ var mapView = (function () {
                     resolve(data);
                 },
                 error: function () {
-
                 }
             });
         });
     }
+
     return {
         getChosenData: getChosenData,
-        test:test,
+        test: test,
+        Heatmap: Heatmap,
     }
 })()

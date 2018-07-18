@@ -1,5 +1,5 @@
 //连接数据库
-var mongoose= require('mongoose');
+const mongoose= require('mongoose');
 mongoose.connect('mongodb://localhost/E-commerce');
 
 var db = mongoose.connection;

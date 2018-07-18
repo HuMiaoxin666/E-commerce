@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 col-2">
-    <a class="navbar-brand  col-md mr-0" href="#" style="font-size:1.4em">海仓数据可视化</a>
+    <h6 class="navbar-brand  col-md mr-0" href="#" style="font-size:1.4em">海仓数据可视化</h6>
 
 </nav>
 
@@ -9,7 +9,7 @@
             <div class="sidebar-sticky">
                 <div class="card box-shadow" style="border-top:none;padding-top:">
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
-                        <span style="font-size:1.3em;">Warehouse</span>
+                        <span style="font-size:1.3em;" id = "all_wh">Warehouse</span>
                         <a class="d-flex align-items-center text-muted" href="#">
                             <span data-feather="plus-circle"></span>
                         </a>
@@ -59,7 +59,7 @@
 
                 <div class="card box-shadow" style="border-top:none;padding-top:">
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
-                        <span style="font-size:1.3em;">goods category</span>
+                        <span style="font-size:1.3em;" id = "all_type">goods category</span>
                         <a class="d-flex align-items-center text-muted" href="#">
                             <span data-feather="plus-circle"></span>
                         </a>
@@ -92,7 +92,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="cg_5">
                                 <span data-feather="file-text"></span>
-                                母婴儿童
+                                母婴用品
                             </a>
                         </li>
                         <li class="nav-item">
@@ -156,6 +156,7 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 " id="main" style="padding-left:0px;">
             <div id="map"></div>
+            <div id = "lineChart"></div>
             <div id="rect">
                 <svg id="rectSvg"></svg>
             </div>

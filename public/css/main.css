@@ -15,13 +15,20 @@
 #rect {
     position: absolute;
     bottom:0%;
-    width: 100%;
+    width: 60%;
     height: 30%;
+    left:40%;
 }
 #rectSvg{
     position: absolute;
     width: 100%;
     height: 100%;
+}
+#lineChart{
+    position: absolute;
+    bottom:0%;
+    width: 40%;
+    height: 30%;
 }
 
 .nav-link{
