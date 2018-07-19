@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Leaflet.Canvas example</title>
+  <!-- based on leaflet quick example: http://leafletjs.com/examples/quick-start-example.html -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
+  <style>
+    html,
+    body,
+    #map {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+  <script src="leaflet_canvas_layer.js"></script>
+
+  <script>
+    var map = L.map('map').setView([0.0, -40.0], 2);
+
+    L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery <a href="http://stamen.com">Stamen</a>'
+    }).addTo(map);
+
+    var pos = [{
+        name: "北京",
+        loc: [116, 39],
+        color: "#FF8585"
+      },
+      {
+        name: "上海",
+        loc: [121, 31],
+        color: "#FFA142"
+      },
+      {
+        name: "广州",
+        loc: [113, 23],
+        color: "#FFFF42"
+      },
+      {
+        name: "昆明",
+        loc: [102, 24],
+        color: "#42FF42"
+      },
+      {
+        name: "西安",
+        loc: [108, 34],
+        color: "#42FFFF"
+      },
+      {
+        name: "武汉",
+        loc: [114, 30],
+        color: "#4242FF"
+      },
+      {
+        name: "乌鲁木齐",
+        loc: [87, 43],
+        color: "#C285FF"
+      },
+      {
+        name: "拉萨",
+        loc: [91, 29],
+        color: "#FF85FF"
+      }
+    ];
+    var BigPointLayer = L.CanvasLayer.extend({
+
+      renderCircle: function (ctx, point, radius) {
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.strokeStyle = "rgba(126,247,255,0.2)";
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, radius, 0, Math.PI * 2.0, true, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      },
+
+      render: function () {
+        var canvas = this.getCanvas();
+        var ctx = canvas.getContext('2d');
+
+        // clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // get center from the map (projected)
+        var point = this._map.latLngToContainerPoint(new L.LatLng(0, 0));
+
+        // render
+        // this.renderCircle(ctx, point, (1.0 + Math.sin(Date.now()*0.001))*300);
+        this.renderCircle(ctx, point, (1.0 + 0.001) * 300);
+        this.redraw();
+      }
+
+      // 更新流星的位置
+      this.update = function () {
+        if (!this.isEnd && dis(current, end) > 0.1) {
+          current[0] += (end[0] - start[0]) * 0.02;
+          current[1] += (end[1] - start[1]) * 0.02;
+        } else {
+          this.isEnd = true;
+        }
+      }
+
+      //计算两点间距离
+      function dis(a, b) {
+        return Math.sqrt((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]));
+      }
+
+    });
+
+    var layer = new BigPointLayer();
+    layer.addTo(map);
+  </script>
+</body>
+
+</html>

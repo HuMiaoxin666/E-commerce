@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+var mongoose = require("mongoose")
 const Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
@@ -8,8 +8,6 @@ const poSchema = new Schema({
     start_hour: String,
     warehouse: String,
     type: String,
-    lng:String,
-    lat:String,
 }, {
     collection: 'orderInfor'
 });

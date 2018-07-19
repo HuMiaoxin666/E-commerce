@@ -99,8 +99,26 @@ router.get("/(:day)?/(:hour)?/(:warehouse)?/(:type)?/rectClick", function (req, 
     OIModel.find({
         start_date: day,
         start_hour: hour,
-        warehouse:warehouse,
-        type:type,
+        warehouse: warehouse,
+        type: type,
+    }, function (err, data) {
+        if (err) console.log(err);
+        else {
+            res.json(data);
+        }
+    });
+
+});
+router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
+    console.log('req.query: ', req.query);
+    let day = req.query.day;
+    let hour = req.query.hour;
+
+    console.log('hour: ', hour);
+    console.log('day: ', day);
+    OIModel.find({
+        start_date: day,
+        start_hour: hour,
     }, function (err, data) {
         if (err) console.log(err);
         else {

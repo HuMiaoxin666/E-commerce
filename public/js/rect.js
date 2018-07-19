@@ -82,7 +82,6 @@ var rectView = (function () {
             .attr("font-family", "楷体")
             .attr("x", function (d) {
                 return colSpace * 0.7 - d.length * 5;
-
             })
             .attr("y", function (d, i) {
                 return rowSpace * 1.3 + i * rowSpace;
@@ -131,12 +130,17 @@ var rectView = (function () {
             getTimeData(cur_time[0], cur_time[1], options.WhStatus, options.type).then(function (data) {
                 mapView.Heatmap(data);
                 console.log('data: ', data);
+            });
+            getTimeData(cur_time[0], cur_time[1]).then(function(data){
+                console.log('data: ', data);
+                lineChart.drawLineChart(data)
             })
         })
 
 
     }
-    
+   
+    //根据时间和仓库和种类获取数据
     function getTimeData(day, hour, warehouse, type) {
         return new Promise(function (resolve, reject) {
             $.ajax({
@@ -157,7 +161,26 @@ var rectView = (function () {
             });
         });
     }
+    //只根据时间获取数据
+    function getTimeData(day, hour) {
+        return new Promise(function (resolve, reject){
+            $.ajax({
+                type: "get",
+                url: "/" + day + '/' + hour  + "/rectClickTime",
+                data: {
+                    day: day,
+                    hour: hour,
+                },
+                success: function (data) {
+                    resolve(data);
+                },
+                error: function () {
+
+                }
+            });
+        });
+    }
     return {
-        DrawRectView: DrawRectView
+        DrawRectView: DrawRectView,
     }
 })()

@@ -1,18 +1,26 @@
 var lineChart = (function () {
-    drawLineChart();
-    function drawLineChart(chosenData){
-        var dom = document.getElementById("lineChart");
-        var myChart = echarts.init(dom);
-        var app = {};
-        // //解析数据
-        let warehouse_arr = [];
-        let type_arr = [];
-        let data_arr = [];
+    function drawLineChart(chosenData) {
+        let dom = document.getElementById("lineChart");
+        let myChart = echarts.init(dom);
+        let app = {};
+        let wh_arr = ['杭州下沙'];
+        let type_arr = ["服饰鞋靴", "环球美食", "家居个护", "美容彩妆", "母婴用品", "营养保健"];
+        let typeIndex_dict = {};
+        let index = 0;
+        var typeCount_arr = [];
+        type_arr.forEach(function (d) {
+            typeIndex_dict[d] = index;
+            typeCount_arr.push(0);
+            index += 1;
+        })
+        chosenData.forEach(element => {
+            let cur_type = element.type;
+            typeCount_arr[typeIndex_dict[cur_type]] += 1;
+        });
         // for(var i = 0; i< )
         option = null;
         option = {
-            title: {
-            },
+            title: {},
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -23,7 +31,7 @@ var lineChart = (function () {
                 }
             },
             legend: {
-                data: ['搜索引擎']
+                data: wh_arr
             },
             toolbox: {
                 feature: {
@@ -39,28 +47,26 @@ var lineChart = (function () {
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
-                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                data: type_arr
             }],
             yAxis: [{
                 type: 'value'
             }],
-            series: [
-                {
-                    name: '搜索引擎',
-                    type: 'line',
-                    stack: '总量',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top'
-                        }
-                    },
-                    areaStyle: {
-                        normal: {}
-                    },
-                    data: [820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
+            series: [{
+                name: '杭州下沙',
+                type: 'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {
+                    normal: {}
+                },
+                data:typeCount_arr
+            }]
         };;
         if (option && typeof option === "object") {
             myChart.setOption(option, true);

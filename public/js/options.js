@@ -1,18 +1,25 @@
 var options = (function () {
     var WhStatus = "wh_5"; //判断当前被选中的仓库
-    var CgStatus = "cg_1"; //判断当前被选中的种类的index字符串
+    var CgStatus = ""; //判断当前被选中的种类的index字符串
     var WH_index = WhStatus[WhStatus.length - 1];; //初始化被选中的仓库（默认全选）
     var CG_index = parseInt(CgStatus[CgStatus.length - 1]) - 1; //被选中的物品种类index
     var cgName_arr = ["服饰鞋靴", "环球美食", "家居个护", "美容彩妆", "母婴用品", "营养保健"]; //用于匹配物品种类的的数组
-    var CG_name = cgName_arr[CG_index];; //初始化被选中的物品种类名称（默认全选）
-
+    var CG_name = '' //初始化被选中的物品种类名称（默认全选）
+    //初始化选中状态
+    console.log('$("#" + WhStatus): ', $("#" + WhStatus));
+    $("#" + WhStatus).css({
+        
+        "color": "#007bff",
+        "background-color": "#E0E0E0"
+    });
+    
     //读取数据库获取数据操作
-    function GetData(WH_index, CG_name) {
+    function GetData(WH_index,CG_name){
         mapView.getChosenData(WH_index, CG_name).then(function (data) {
-            console.log('data: ', data);
-            // AddOptions(data);
-            // mapView.Heatmap(data);
-            // rectView.DrawRectView(data);
+            console.log("Search data competion !");
+            AddOptions(data);
+            mapView.Heatmap(data);
+            rectView.DrawRectView(data);
         });
     }
 
@@ -40,7 +47,7 @@ var options = (function () {
                 "background-color": "#E0E0E0"
             });
             //更新当前选中的仓库
-            WhStatus = ($("#" + this.id).css("color") == "rgb(0, 123, 255)") ? this.id : false;
+            WhStatus = ($("#" + this.id).css("color")== "rgb(0, 123, 255)") ? this.id : false;
             WH_index = WhStatus[WhStatus.length - 1];
 
             console.log("Searching !")
@@ -110,7 +117,7 @@ var options = (function () {
                 });
         });
     }
-    //构建查找订单的请求
+    //根据订单号和物品种类构建查找订单的请求
     function getorderInfor(orderNum, cgType) {
         return new Promise(function (resolve, reject) {
             $.ajax({
