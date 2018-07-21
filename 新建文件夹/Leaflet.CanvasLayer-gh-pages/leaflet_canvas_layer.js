@@ -208,6 +208,7 @@ initialize: function (options) {
   // use direct: true if you are inside an animation frame call
   redraw: function(direct) {
     var domPosition = L.DomUtil.getPosition(this._map.getPanes().mapPane);
+    
     if (domPosition) {
       L.DomUtil.setPosition(this._canvas, { x: -domPosition.x, y: -domPosition.y });
     }
