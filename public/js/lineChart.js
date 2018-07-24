@@ -26,7 +26,7 @@ var lineChart = (function () {
                 axisPointer: {
                     type: 'cross',
                     label: {
-                        backgroundColor: '#6a7985'
+                        backgroundColor: '#FFB76D'
                     }
                 }
             },
@@ -68,12 +68,11 @@ var lineChart = (function () {
                 data:typeCount_arr
             }]
         };;
-        if (option && typeof option === "object") {
+        if (option && typeof option === "object"){
             myChart.setOption(option, true);
         }
     }
     return {
         drawLineChart: drawLineChart,
     }
-
 })()

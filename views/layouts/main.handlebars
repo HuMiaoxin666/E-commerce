@@ -3,6 +3,10 @@
 
 <head>
     <meta charset="utf-8">
+	<link href="css/bootstrap-switch.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+    <link href="css/easy-button.css" rel="stylesheet" />
+
     <link href="css/leaflet.css" rel="stylesheet" />
     <link href='css/mapbox-gl.css' rel='stylesheet' />
     <link href="css/jquery-ui.min.css" rel="stylesheet">
@@ -12,28 +16,32 @@
     <link href="css/bootstrap-combobox.css" type="text/css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet" type="text/css">
     <title>E-Commerce</title>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/d3.v3.min.js"></script>
-    <script src="js/d3.v4.min.js"></script>
+
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+
     <script src="js/pixi.min.js"></script>
     <script src="js/leaflet.min.js"> </script>
-    <script src="js/L.D3SvgOverlay.min.js"><script>
-            <script src='js/mapbox-gl.js'></script>
+    <script src="js/d3.v4.min.js"></script>
+    <script src='js/mapbox-gl.js'></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
     <script src="js/bootstrap.js"></script>
-    <script src="js/d3-scale-chromatic.v1.min.js"></script>
+     <script src="js/main.min.js" id = "planeJs"></script>
     <script src="js/leaflet-heat.js"></script>
-    <script src="js/HeatLayer.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+    <script src="js/easy-button.js"></script>
+
+    {{!-- <script src="js/main.min.js" id = "planeJs"></script> --}}
+
 </head>
 
 <body>
@@ -42,6 +50,7 @@
     <script src="js/lineChart.js"></script>
     <script src="js/rect.js"></script>
     <script src="js/mapview.js"></script>
+    <script src="js/MeteorMap.js"></script>
 
 </body>
 

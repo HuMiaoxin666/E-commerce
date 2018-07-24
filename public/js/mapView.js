@@ -1,83 +1,124 @@
 var mapView = (function () {
-
-    var map = L.map('map', {
-        renderer: L.canvas()
-    }).setView([30.309882, 120.376905], 4)
+    //黑色地图
+    //https://api.mapbox.com/styles/v1/keypro/cjjibvxa20ljx2slnphxjle4b/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2V5cHJvIiwiYSI6ImNqamliaTJtbjV0YTMzcG82bmthdW03OHEifQ.UBWsyfRiWMYly4gIc2H7cQ
+    //白色
+    //https://api.mapbox.com/styles/v1/keypro/cjjs6cawt25iq2snp6kqxu3r3/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2V5cHJvIiwiYSI6ImNqamliaTJtbjV0YTMzcG82bmthdW03OHEifQ.UBWsyfRiWMYly4gIc2H7cQ
+    //地图设置
+    var map = L.map('map', {}).setView([30.309882, 120.376905], 4)
     var osmUrl = 'https://api.mapbox.com/styles/v1/keypro/cjjs6cawt25iq2snp6kqxu3r3/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2V5cHJvIiwiYSI6ImNqamliaTJtbjV0YTMzcG82bmthdW03OHEifQ.UBWsyfRiWMYly4gIc2H7cQ',
         layer = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
     L.tileLayer(osmUrl, {
+
         minZoom: 1,
         maxZoom: 17,
         //用了mapbox的图层
         attribution: layer
         //访问令牌
     }).addTo(map);
-    map.zoomControl.remove();
     //初始化界面
-    /*
-    d3.csv("data/LocName.csv", function (error, data) {
-        console.log(data);
-        var pointLoc = [];
-        pointLoc = data.map(function (d) {
-            d.latLng = [+d.lat, +d.lng];
-            d.name = d["市"] + '、' + d['区'];
-            return d;
-        });
-        console.log('pointLoc: ', pointLoc);
-        var d3Overlay = L.d3SvgOverlay(function (selection, projection) {
+    
+    getData('5', '服饰鞋靴').then(function (data) {
+        if (options.heat_plane == true)
+            Heatmap(data);
+        else
+            PlaneView.DrawPlaneView(data);
+        options.AddOptions(data);
+        lineChart.drawLineChart(data);
+        rectView.DrawRectView(data);
 
-            var updateSelection = selection.selectAll('circle').data(pointLoc);
-            updateSelection.enter()
-                .append('circle')
-                .attr("r", 1)
-                .attr("cx", function (d) {
-                    return projection.latLngToLayerPoint(d.latLng).x
-                })
-                .attr("cy", function (d) {
-                    return projection.latLngToLayerPoint(d.latLng).y
-                })
-                .attr("fill", '#4AC2F1')
-                .attr("id", function (d) {
-                    return d.name
-                })
-                .attr("text", function (d) {
-                    return d.name;
-                })
-                .transition()
-                .duration(2000)
-                .attr("r", 5);
-
-        });
-
-        d3Overlay.addTo(map);
-    });*/
-
-
+    })
+    //全局变量
+    var part_all = true;
     function Heatmap(chosenData) {
+        console.log('chosenData: ', chosenData);
+        // $("#planeJs").remove();
+        // console.log('$("#planeJs"): ', $("#planeJs"));
+        // var map = L.map('map', {
+        // }).setView([30.309882, 120.376905], 4)
+        // var osmUrl = 'https://api.mapbox.com/styles/v1/keypro/cjjs6cawt25iq2snp6kqxu3r3/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2V5cHJvIiwiYSI6ImNqamliaTJtbjV0YTMzcG82bmthdW03OHEifQ.UBWsyfRiWMYly4gIc2H7cQ',
+        //     layer = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+        //     L.tileLayer(osmUrl, {
+
+        //         minZoom: 1,
+        //         maxZoom: 17,
+        //         //用了mapbox的图层
+        //         attribution: layer
+        //         //访问令牌
+        //     }).addTo(map);
+
+        // map.zoomControl.remove();
         let container = $("#map").find("canvas");
         container.remove();
 
-        let heatData = [];
-        for (var i = 0; i < chosenData.length; i++) {
-            chosenData[i]['lat'] = parseFloat(chosenData[i]['lat']);
-            chosenData[i]['lng'] = parseFloat(chosenData[i]['lng']);
-            heatData.push([chosenData[i]['lat'], chosenData[i]['lng']])
-        }
-        var heat = L.heatLayer(heatData, {
-                maxZoom: 17,
-                radius: 10
-            }).addTo(map),
-            draw = true;
+
+        d3.json("data/address_lat&lng.json", function (allAdress) {
+            let heatData = [];
+            var cur_address = '';
+            // for(var t in allAdress){
+            //     allAdress[t]
+            // }
+            for (var i = 0; i < chosenData.length; i++) {
+                cur_address = chosenData[i]['province'] + chosenData[i]['city'] + chosenData[i]['country'];
+                allAdress[cur_address].value += 1;
+            }
+            for (var t in allAdress) {
+                if (allAdress[t].value > 0)
+                    heatData.push([allAdress[t].lat, allAdress[t].lng, allAdress[t].value])
+            }
+            if(part_all == true){
+                let max_value = d3.max(heatData, function (d) {
+                    return d[2];
+                })
+                let min_value = d3.min(heatData, function (d) {
+                    return d[2];
+                })
+                //定义值比例尺
+                var valueScale = d3.scaleLinear().domain([min_value, max_value]).range([10, 5000]);
+                heatData.forEach(element=>{
+                    element[2] = valueScale(element[2]);
+                })
+            }
+           
+            console.log('allAdress: ', allAdress);
+            console.log('heatData: ', heatData);
+            var heat = L.heatLayer(heatData, {
+                    maxZoom: 17,
+                    radius: 10
+                }).addTo(map),
+                draw = true;
+        })
+
     }
-    getChosenData('', '').then(function (data) {
-        lineChart.drawLineChart(data);
-    })
+
+    // function getPlaneJs() {
+    //     $.ajax({
+    //         async: false,
+    //         type: "GET",
+    //         url: "js/main.min.js",
+    //         dataType: "script",
+    //         error: function () {
+    //             alert('当前脚本加载出错')
+    //         }
+    //     });
+    // }
+
+    // function getHeatJs() {
+    //     $.ajax({
+    //         async: false,
+    //         type: "GET",
+    //         url: "js/leaflet-heat.js",
+    //         dataType: "script",
+    //         error: function () {
+    //             alert('当前脚本加载出错')
+    //         }
+    //     });
+    // }
 
     function test() {
         console.log("It work !");
     }
     //根据仓库和物品种类获取数据
-    function getChosenData(warehouse, type) {
+    function getData(warehouse, type) {
         console.log('type: ', type);
         console.log('warehouse: ', warehouse);
         console.log("It work !");
@@ -98,8 +139,9 @@ var mapView = (function () {
     }
 
     return {
-        getChosenData: getChosenData,
+        getData: getData,
         test: test,
         Heatmap: Heatmap,
+        map: map,
     }
 })()

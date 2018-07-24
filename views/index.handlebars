@@ -1,6 +1,9 @@
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 col-2">
-    <h6 class="navbar-brand  col-md mr-0" href="#" style="font-size:1.4em">海仓数据可视化</h6>
-
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">海仓数据可视化</a>
+    <nav class="nav nav-masthead justify-content-center" style="position:absolute;left:20%">
+        <a class="nav-link active" href="#" id="heatMap">热力图</a>
+        <a class="nav-link" href="#" id="planeView">飞机图</a>
+    </nav>
 </nav>
 
 <div class="container-fluid">
@@ -8,12 +11,12 @@
         <nav class="col-md-2 d-none d-md-block  sidebar">
             <div class="sidebar-sticky">
                 <div class="card box-shadow" style="border-top:none;padding-top:">
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
-                        <span style="font-size:1.3em;" id = "all_wh">Warehouse</span>
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 text-muted border-bottom">
+                        <span style="font-size:1.5em;">仓库选择</span>
                         <a class="d-flex align-items-center text-muted" href="#">
                             <span data-feather="plus-circle"></span>
                         </a>
-                    </h6>
+                    </h5>
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="wh_1">
@@ -52,14 +55,21 @@
                                 Unknown
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_7">
+                                <span data-feather="home"></span>
+                                全选
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </div>
 
 
                 <div class="card box-shadow" style="border-top:none;padding-top:">
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
-                        <span style="font-size:1.3em;" id = "all_type">goods category</span>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 text-muted border-bottom" style="background-color:rgb(240, 240, 240);">
+                        <span style="font-size:1.5em;color:black">物品分类</span>
                         <a class="d-flex align-items-center text-muted" href="#">
                             <span data-feather="plus-circle"></span>
                         </a>
@@ -101,12 +111,18 @@
                                 营养保健
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_7">
+                                <span data-feather="file-text"></span>
+                                全选
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="card box-shadow" style="border-bottom:none;border-top:none;    border-bottom-right-radius:0">
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
-                        <span style="font-size:1.3em;">order information</span>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 border-bottom text-muted" style="background-color:rgb(240, 240, 240);">
+                        <span style="font-size:1.5em;color:black">订单信息</span>
                         <a class="d-flex align-items-center text-muted" href="#">
                             <span data-feather="plus-circle"></span>
                         </a>
@@ -116,48 +132,56 @@
 
                     </h6>
                     <div class="form-group" style="margin-bottom:0%;">
-                        <select class="form-control" style="font-size:.8rem;" id = "orderNum">
+                        <select class="form-control" style="font-size:.8rem;" id="orderNum">
                             <option></option>
                         </select>
                     </div>
 
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">用户</span>
-                        <input type="text" class="inputText" id = "id">
+                        <input type="text" class="inputText" id="id">
                     </h6>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">仓库</span>
-                        <input type="text" class="inputText"id = "warehouse">
+                        <input type="text" class="inputText" id="warehouse">
                     </h6>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">支付时间</span>
-                        <input type="text" class="inputText"id = "startTime">
+                        <input type="text" class="inputText" id="startTime">
                     </h6>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">推送时间</span>
-                        <input type="text" class="inputText"id = "endTime">
+                        <input type="text" class="inputText" id="endTime">
                     </h6>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">商品名称</span>
                     </h6>
-                    <input type="text" class="inputText" style="font-size:.8em;"id = "name">
+                    <input type="text" class="inputText" style="font-size:.8em;" id="name">
                     </span>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">购买数量</span>
-                        <input type="text" class="inputText"id = "qty">
+                        <input type="text" class="inputText" id="qty">
                     </h6>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">
                         <span style="font-size:1em;">收货地址</span>
-                        <input type="text" class="inputText"id = "address">
+                        <input type="text" class="inputText" id="address">
                     </h6>
                 </div>
 
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 " id="main" style="padding-left:0px;">
+
             <div id="map"></div>
-            <div id = "lineChart"></div>
+            <div id="lineChartOut">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 border-bottom text-muted" style="background-color:rgb(240, 240, 240);">
+                    时序物品分类统计图</h6>
+
+                <div id="lineChart"></div>
+            </div>
             <div id="rect">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 border-bottom text-muted" style="background-color:rgb(240, 240, 240);margin-bottom:0%;">
+                    时序热力图</h6>
                 <svg id="rectSvg"></svg>
             </div>
         </main>
