@@ -2,8 +2,10 @@ var rectView = (function () {
 
     function DrawRectView(chosenData) {
         //全局变量
-        var color_selected = "#007bff";
-        var color_over = "#4012B2";
+        var rect_color_selected = "#007bff";
+        var rect_color_over = "#4012B2";
+        var text_color_selected = "#007bff";
+        var text_color_over = "#007bff";
         var color_rect_stroke = "#F0F0F0";
         var color_text_stroke = "#666666";
         var svgRect = d3.select("#rectSvg");
@@ -89,8 +91,12 @@ var rectView = (function () {
         var svgWidth = $("#rectSvg")[0].clientWidth;
         var colSpace = svgWidth / 26;
         var rowSpace = svgHeight / (day_length + 1.2);
-        //添加时间标签
-        var cur_selectId = '';
+
+        var selected_hourId = ''; //添加小时选中标签
+        var selected_dayId = ''; //添加日期选中标签
+        var selected_rectId = []; //添加矩形选中标签
+
+        //添加小时时间标签
         svgRect.append("a").selectAll("text").data(hour_arr).enter()
             .append("text")
             .attr("font-size", "10px")
@@ -107,45 +113,56 @@ var rectView = (function () {
                 return d;
             }).on("mouseover", function (d, i) {
                 $(this).css({
-                    "stroke": color_selected
+                    "stroke": text_color_selected
                 });
-                if (cur_selectId != this.id) {
+                if (selected_hourId != this.id) {
                     day_arr.forEach(element => {
-                        $('#' + element + '_' + d).css("stroke", color_over);
+                        $('#' + element + '_' + d).css("stroke", rect_color_over);
                     })
                 }
 
             })
             .on("mouseout", function (d, i) {
-                if (cur_selectId != this.id) {
+                if (selected_hourId != this.id) {
                     $(this).css("stroke", color_text_stroke);
                     day_arr.forEach(element => {
-                        $('#' + element + '_' + d).css("stroke", color_rect_stroke);
+                        let temp_rect = '#' + element + '_' + d;
+                        if (selected_rectId.indexOf(temp_rect) == -1)
+                            $(temp_rect).css("stroke", color_rect_stroke);
+                        else
+                            $(temp_rect).css("stroke", rect_color_selected);
+
                     })
                 }
-                console.log("out hour");
 
             }).on("click", function (d) {
                 svgRect.selectAll("text").style("stroke", color_text_stroke)
                 $(this).css({
-                    "stroke": color_selected,
+                    "stroke": text_color_selected,
                 });
-                cur_selectId = this.id;
+                selected_hourId = this.id;
                 let cur_hour = d; //获取当前选中的hour
                 console.log('cur_hour: ', cur_hour);
-                svgRect.selectAll("rect").style("stroke", color_rect_stroke)
+                svgRect.selectAll("rect").style("stroke", color_rect_stroke).style("stroke-width",0.05 * colSpace)
+                //跟新当前选中的矩形id数组
+                let temp_arr = [];
                 day_arr.forEach(element => {
-                    $("#" + element + "_" + cur_hour).css("stroke", color_selected);
+                    $("#" + element + "_" + cur_hour).css({"stroke": rect_color_selected,"stroke-width":0.1 * colSpace});
+                    temp_arr.push("#" + element + "_" + cur_hour);
                 });
+                selected_rectId = temp_arr;
                 //跟新热力图或飞机图和折线图
 
-                getTimeData("", cur_hour, options.WhStatus, options.type).then(function (data) {
+                getTimeData("all", cur_hour, variable.WH_index, variable.type).then(function (data) {
+                    console.log('data: ', data);
+                    console.log('variable.type: ', variable.type);
+                    console.log('variable.WH_index: ', variable.WH_index);
                     //重新赋值当前的变量
                     variable.chosen_data = data;
                     variable.heat_data = data;
 
-                    console.log(' options.type: ', options.type);
-                    console.log('options.WhStatus: ', options.WhStatus);
+                    console.log(' options.type: ', variable.type);
+                    console.log('variable.WH_index: ',variable.WH_index);
                     console.log('heat_plane: ', variable.heat_plane);
                     if (variable.heat_plane == true)
                         mapView.Heatmap(data);
@@ -154,13 +171,14 @@ var rectView = (function () {
                     console.log('time wh cg data: ', data);
                     options.AddOptions(data);
                 });
-                getTimeOnlyData('', cur_hour).then(function (data) {
+                getTimeOnlyData('all', cur_hour).then(function (data) {
                     variable.chart_data = data;
 
                     console.log('only time data: ', data);
                     lineChart.drawLineChart(data)
                 });
             })
+        //添加日期时间标签
         svgRect.append("a").selectAll("text").data(day_onlyArr).enter()
             .append("text")
             .attr("font-size", "10px")
@@ -180,41 +198,53 @@ var rectView = (function () {
             })
             .on("mouseover", function (d, i) {
                 $(this).css({
-                    "stroke": color_selected
+                    "stroke": text_color_selected
                 });
-                if (cur_selectId != this.id) {
+                if (selected_dayId != this.id) {
                     hour_arr.forEach(element => {
-                        $("#" + day_arr[i] + '_' + element).css("stroke", color_over);
+                        $("#" + day_arr[i] + '_' + element).css("stroke", rect_color_over);
                     })
                 }
 
             })
             .on("mouseout", function (d, i) {
-                if (cur_selectId != this.id) {
+                if (selected_dayId != this.id) {
+                    
                     $(this).css("stroke", color_text_stroke);
                     hour_arr.forEach(element => {
-                        $("#" + day_arr[i] + '_' + element).css("stroke", color_rect_stroke);
+                        let temp_rect = "#" + day_arr[i] + '_' + element;
+                        if (selected_rectId.indexOf(temp_rect) == -1)
+                            $(temp_rect).css("stroke", color_rect_stroke);
+                        else
+                            $(temp_rect).css("stroke", rect_color_selected);
                     })
                 }
 
             }).on("click", function (d, i) {
                 svgRect.selectAll("text").style("stroke", color_text_stroke)
-                cur_selectId = this.id;
+                selected_dayId = this.id;
                 $(this).css({
-                    "stroke": color_selected,
+                    "stroke": text_color_selected,
                 });
                 let cur_day = day_arr[i]; //获取当前选中的日期
-                svgRect.selectAll("rect").style("stroke", color_rect_stroke)
+                svgRect.selectAll("rect").style("stroke", color_rect_stroke).style("stroke-width",0.05 * colSpace)
+                //跟新当前选中的矩形id数组
+                let temp_arr = [];
                 hour_arr.forEach(element => {
-                    $("#" + cur_day + "_" + element).css("stroke", color_selected);
+                    $("#" + cur_day + "_" + element).css({"stroke": rect_color_selected,"stroke-width":0.1 * colSpace});
+                    temp_arr.push("#" + cur_day + "_" + element);
                 })
+                selected_rectId = temp_arr;
                 //跟新热力图或飞机图和折线图
-                getTimeData(cur_day, '', options.WhStatus, options.type).then(function (data) {
+                getTimeData(cur_day, 'all', variable.WH_index, variable.type).then(function (data) {
+                    console.log('data: ', data);
+                    console.log(' variable.type: ',  variable.type);
+                    console.log('variable.WH_index: ', variable.WH_index);
                     variable.heat_data = data;
                     variable.chosen_data = data;
 
-                    console.log(' options.type: ', options.type);
-                    console.log('options.WhStatus: ', options.WhStatus);
+                    console.log(' options.type: ', variable.type);
+                    console.log('variable.WH_index: ', variable.WH_index);
                     if (variable.heat_plane == true)
                         mapView.Heatmap(data);
                     else
@@ -222,7 +252,7 @@ var rectView = (function () {
                     console.log('time wh cg data: ', data);
                     options.AddOptions(data);
                 });
-                getTimeOnlyData(cur_day, '').then(function (data) {
+                getTimeOnlyData(cur_day, 'all').then(function (data) {
                     variable.chart_data = data;
 
                     console.log('only time data: ', data);
@@ -270,21 +300,26 @@ var rectView = (function () {
         svgRect.selectAll("rect").on("click", function (d) {
             //选中状态调整
             svgRect.selectAll("text").style("stroke", color_text_stroke) //字体重置
-            svgRect.selectAll("rect").style("stroke", color_rect_stroke) //边框颜色重置
-            d3.select(this).style("stroke", color_selected)
+            svgRect.selectAll("rect").style("stroke", color_rect_stroke).style("stroke-width",0.05 * colSpace) //边框颜色重置
+            d3.select(this).style("stroke", rect_color_selected).style("stroke-width",0.1 * colSpace)
             var cur_time = this.id.split("_"); //获取当前日期和小时（0为日期，1为小时）
-            $("#day_" + cur_time[0]).css("stroke", color_selected); //当前选中的日期
-            $("#hour_" + cur_time[1]).css("stroke", color_selected); //当前选中的小时
+            selected_hourId = "hour_" + cur_time[1];
+            selected_dayId = "day_" + cur_time[0];
+            $("#day_" + cur_time[0]).css("stroke", text_color_selected); //当前选中的日期
+            $("#hour_" + cur_time[1]).css("stroke", text_color_selected); //当前选中的小时
 
             //跟新热力图或飞机图和折线图
             var cur_time = this.id.split("_");
             console.log('cur_time: ', cur_time);
-            getTimeData(cur_time[0], cur_time[1], options.WhStatus, options.type).then(function (data) {
+            getTimeData(cur_time[0], cur_time[1], variable.WH_index, variable.type).then(function (data) {
+                console.log('data: ', data);
+                console.log('variable.WH_index: ', variable.WH_index);
+                console.log('variable.type: ', variable.type);
                 variable.chosen_data = data;
                 variable.heat_data = data;
 
-                console.log(' options.type: ', options.type);
-                console.log('options.WhStatus: ', options.WhStatus);
+                console.log(' variable.type: ', variable.type);
+                console.log('variable.WH_index: ', variable.WH_index);
                 console.log('heat_plane: ', variable.heat_plane);
                 if (variable.heat_plane == true)
                     mapView.Heatmap(data);
@@ -298,7 +333,7 @@ var rectView = (function () {
                 console.log('only time data: ', data);
                 lineChart.drawLineChart(data)
             })
-            console.log(" variable.chosen_data",variable.chosen_data);
+            console.log(" variable.chosen_data", variable.chosen_data);
         })
         //画Colorbar
         var defs = svgRect.append("defs");
@@ -309,15 +344,15 @@ var rectView = (function () {
             .attr("x2", "100%")
             .attr("y2", "0%");
         var stop1 = linearGradient.append("stop")
-            .attr("offset", "0%") 
+            .attr("offset", "0%")
             .style("stop-color", minColor);
-            var stop2 = linearGradient.append("stop")
+        var stop2 = linearGradient.append("stop")
             .attr("offset", "25%")
             .style("stop-color", "#5FFDDC");
-            var stop3 = linearGradient.append("stop")
+        var stop3 = linearGradient.append("stop")
             .attr("offset", "50%")
             .style("stop-color", "#83FC40");
-            var stop4 = linearGradient.append("stop")
+        var stop4 = linearGradient.append("stop")
             .attr("offset", "75%")
             .style("stop-color", "#F2F330");
         var stop5 = linearGradient.append("stop")

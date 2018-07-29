@@ -19,7 +19,6 @@
             1: "red"
         },
         data: function (t, i) {
-            console.log("t", t);
             return this._data = t, this
         },
         max: function (t) {
@@ -44,13 +43,11 @@
                 s = a.createLinearGradient(0, 0, 0, 256);
             i.width = 1, i.height = 256;
             for (var e in t) {
-                console.log(e);
                 s.addColorStop(e, t[e]);
             }
             return a.fillStyle = s, a.fillRect(0, 0, 1, 256), this._grad = a.getImageData(0, 0, 1, 256).data, this
         },
         draw: function (t) {
-            console.log("this", this);
             this._circle || this.radius(this.defaultRadius), this._grad || this.gradient(this.defaultGradient);
             var i = this._ctx;
             i.clearRect(0, 0, this._width, this._height);
@@ -124,9 +121,6 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
             v = this._map._getMapPanePos(),
             w = v.x % g,
             y = v.y % g;
-        console.log('f: ', f);
-        console.log('u: ', u);
-        console.log('this._map.getZoom(): ', this._map.getZoom());
         for (t = 0, i = this._latlngs.length; i > t; t++)
             if (a = this._map.latLngToContainerPoint(this._latlngs[t]), m.contains(a)) {
                 e = Math.floor((a.x - w) / g) + 2, n = Math.floor((a.y - y) / g) + 2;

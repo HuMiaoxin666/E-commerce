@@ -4,19 +4,18 @@ var options = (function () {
     var CgStatus = "cg_1"; //判断当前被选中的种类的index字符串
     var WH_index = WhStatus[WhStatus.length - 1];; //初始化被选中的仓库（默认全选）
     var CG_index = parseInt(CgStatus[CgStatus.length - 1]) - 1; //被选中的物品种类index
-    var cgName_arr = ["服饰鞋靴", "环球美食", "家居个护", "美容彩妆", "母婴用品", "营养保健", '']; //用于匹配物品种类的的数组
+    var cgName_arr = ["服饰鞋靴", "环球美食", "家居个护", "美容彩妆", "母婴用品", "营养保健", 'all']; //用于匹配物品种类的的数组
     var CG_name = '服饰鞋靴' //初始化被选中的物品种类名称（默认全选）
-    var op_data;
+    variable.type = CG_name;
+    variable.WH_index = WH_index;
     // 初始化状态
 
     $("#" + WhStatus).css({
-        "color": "#007bff",
-        "background-color": "#F0F0F0"
+        "color": "#2ebaed"
     });
     $("#" + CgStatus).css({
 
-        "color": "#007bff",
-        "background-color": "#F0F0F0"
+        "color": "#2ebaed"
     });
     //给热力图和飞机图添加点击事件
     $("#heatMap").click(function () {
@@ -65,27 +64,27 @@ var options = (function () {
     // $("#all_wh").click(function () {
     //     for (var i = 1; i <= 6; i++)
     //         $("#wh_" + String(i)).css({
-    //             "color": "black",
-    //             "background-color": "white"
+    //             "color": "rgb(121, 120, 120)",
+    //           //  "background-color": "white"
     //         });
     //     $("#" + this.id).css({
-    //         "color": "#007bff",
-    //         "background-color": "#F0F0F0"
+    //         "color": "#2ebaed",
+    //        // "background-color": "#F0F0F0"
     //     });
     //     WhStatus = '', WH_index = ''; //为空时代表全选
     //     GetData(WH_index, CG_name); //读取数据库并刷新页面
     // })
     // $("#all_wh").mouseover(function () {
     //     $("#" + this.id).css({
-    //         "color": "#007bff",
-    //         "background-color": "#F0F0F0"
+    //         "color": "#2ebaed",
+    //        // "background-color": "#F0F0F0"
     //     });
     // });
     // $("#all_wh").mouseout(function () {
     //     if (WhStatus != this.id)
     //         $("#" + this.id).css({
-    //             "color": "black",
-    //             "background-color": "white"
+    //             "color": "rgb(121, 120, 120)",
+    //           //  "background-color": "white"
     //         });
     // });
     //选取仓库事件
@@ -93,16 +92,16 @@ var options = (function () {
         $("#wh_" + String(i)).click(function () {
             for (var i = 1; i <= 6; i++)
                 $("#wh_" + String(i)).css({
-                    "color": "black",
-                    "background-color": "white"
+                    "color": "rgb(121, 120, 120)"
                 });
             $("#" + this.id).css({
-                "color": "#007bff",
-                "background-color": "#F0F0F0"
+                "color": "#2ebaed"
             });
             //更新当前选中的仓库
-            WhStatus = ($("#" + this.id).css("color") == "rgb(0, 123, 255)") ? this.id : false;
+            WhStatus = ($("#" + this.id).css("color") == "rgb(46, 186, 237)") ? this.id : false;
+            
             WH_index = WhStatus[WhStatus.length - 1];
+            variable.WH_index = WH_index;
 
             console.log("Searching !")
             console.log('cgName_arr[CgStatus]: ', CG_index);
@@ -112,15 +111,13 @@ var options = (function () {
 
         $("#wh_" + String(i)).mouseover(function () {
             $("#" + this.id).css({
-                "color": "#007bff",
-                "background-color": "#F0F0F0"
+                "color": "#2ebaed"
             });
         });
         $("#wh_" + String(i)).mouseout(function () {
             if (WhStatus != this.id)
                 $("#" + this.id).css({
-                    "color": "black",
-                    "background-color": "white"
+                    "color": "rgb(121, 120, 120)"
                 });
         });
     }
@@ -131,59 +128,56 @@ var options = (function () {
     // $("#all_type").click(function () {
     //     for (var i = 1; i <= 7; i++)
     //         $("#cg_" + String(i)).css({
-    //             "color": "black",
-    //             "background-color": "white"
+    //             "color": "rgb(121, 120, 120)",
+    //           //  "background-color": "white"
     //         });
     //     $("#" + this.id).css({
-    //         "color": "#007bff",
-    //         "background-color": "#F0F0F0"
+    //         "color": "#2ebaed",
+    //        // "background-color": "#F0F0F0"
     //     });
     //     CgStatus = '', CG_index = '', CG_name = ''; //为空时代表全选
     //     GetData(WH_index, CG_name); //读取数据库并刷新页面
     // })
     // $("#all_type").mouseover(function () {
     //     $("#" + this.id).css({
-    //         "color": "#007bff",
-    //         "background-color": "#F0F0F0"
+    //         "color": "#2ebaed",
+    //        // "background-color": "#F0F0F0"
     //     });
     // });
     // $("#all_type").mouseout(function () {
     //     if (CgStatus != this.id)
     //         $("#" + this.id).css({
-    //             "color": "black",
-    //             "background-color": "white"
+    //             "color": "rgb(121, 120, 120)",
+    //           //  "background-color": "white"
     //         });
     // });
     //选取物品种类事件
     for (var i = 1; i <= 7; i++) {
         $("#cg_" + String(i)).click(function () {
-            for (var i = 1; i <= 6; i++)
-                $("#cg_" + String(i)).css({
-                    "color": "black",
-                    "background-color": "white"
+            for (var j = 1; j <= 7; j++)
+                $("#cg_" + String(j)).css({
+                    "color": "rgb(121, 120, 120)"
                 });
             $("#" + this.id).css({
-                "color": "#007bff",
-                "background-color": "#F0F0F0"
+                "color": "#2ebaed"
             });
             //更新当前选中的物品种类
-            CgStatus = ($("#" + this.id).css("color") == "rgb(0, 123, 255)") ? this.id : false;
+            CgStatus = ($("#" + this.id).css("color") == "rgb(46, 186, 237)") ? this.id : false;
             CG_index = parseInt(CgStatus[CgStatus.length - 1]) - 1;
             CG_name = cgName_arr[CG_index];
+            variable.type = CG_name;
             GetData(WH_index, CG_name); //读取数据库并刷新页面
         });
 
         $("#cg_" + String(i)).mouseover(function () {
             $("#" + this.id).css({
-                "color": "#007bff",
-                "background-color": "#F0F0F0"
+                "color": "#2ebaed"
             });
         });
         $("#cg_" + String(i)).mouseout(function () {
             if (CgStatus != this.id)
                 $("#" + this.id).css({
-                    "color": "black",
-                    "background-color": "white"
+                    "color": "rgb(121, 120, 120)"
                 });
         });
     }
@@ -234,7 +228,7 @@ var options = (function () {
     console.log('WH_index: ', WH_index);
     return {
         GetData: GetData,
-        WhStatus: WH_index,
+        WH_index: WH_index,
         type: CG_name,
         AddOptions: AddOptions,
         // heat_plane: heat_plane,
