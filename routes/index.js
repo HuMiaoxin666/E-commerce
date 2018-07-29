@@ -102,58 +102,109 @@ router.get("/(:day)?/(:hour)?/(:warehouse)?/(:type)?/rectClick", function (req, 
     console.log('hour: ', hour);
     console.log('day: ', day);
     //都全选
-    if(day == 'all' && hour == 'all'){
-        OIModel.find({
-            warehouse: warehouse,
-            type: type,
-        }, function (err, data) {
-            if (err) console.log(err);
-            else {
-                res.send(data);
-            }
-        });
+    if (day == 'all' && hour == 'all') {
+        if (type == "all") {
+            OIModel.find({
+                warehouse: warehouse,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        } else {
+            OIModel.find({
+                warehouse: warehouse,
+                type: type,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        }
+
     }
     //只有日期全选
-    else if(day == 'all' && hour != 'all'){
-        OIModel.find({
-            start_hour: hour,
-            warehouse: warehouse,
-            type: type,
-        }, function (err, data) {
-            if (err) console.log(err);
-            else {
-                res.send(data);
-            }
-        });
+    else if (day == 'all' && hour != 'all') {
+        if (type == "all") {
+            OIModel.find({
+                start_hour: hour,
+                warehouse: warehouse,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        } else {
+            OIModel.find({
+                start_hour: hour,
+                warehouse: warehouse,
+                type: type,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        }
+
     }
     //只有小时全选
-    else if(day != 'all' && hour == 'all'){
-        OIModel.find({
-            start_date: day,
-            warehouse: warehouse,
-            type: type,
-        }, function (err, data) {
-            if (err) console.log(err);
-            else {
-                res.send(data);
-            }
-        });
+    else if (day != 'all' && hour == 'all') {
+        if (type == "all") {
+            OIModel.find({
+                start_date: day,
+                warehouse: warehouse,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        } else {
+            OIModel.find({
+                start_date: day,
+                warehouse: warehouse,
+                type: type,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        }
+
     }
     //都不全选
-    else{
-        OIModel.find({
-            start_date: day,
-            start_hour: hour,
-            warehouse: warehouse,
-            type: type,
-        }, function (err, data) {
-            if (err) console.log(err);
-            else {
-                res.send(data);
-            }
-        });
+    else {
+        if (type == "all") {
+            OIModel.find({
+                start_date: day,
+                start_hour: hour,
+                warehouse: warehouse,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        } else {
+            OIModel.find({
+                start_date: day,
+                start_hour: hour,
+                warehouse: warehouse,
+                type: type,
+            }, function (err, data) {
+                if (err) console.log(err);
+                else {
+                    res.send(data);
+                }
+            });
+        }
     }
-    
+
 
 });
 router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
@@ -164,7 +215,7 @@ router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
     console.log('hour: ', hour);
     console.log('day: ', day);
     //都全选
-    if(day == 'all' && hour == 'all'){
+    if (day == 'all' && hour == 'all') {
         OIModel.find({}, function (err, data) {
             if (err) console.log(err);
             else {
@@ -173,7 +224,7 @@ router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
         });
     }
     //只有日期全选
-    else if(day == 'all' && hour != 'all'){
+    else if (day == 'all' && hour != 'all') {
         OIModel.find({
             start_hour: hour,
         }, function (err, data) {
@@ -184,7 +235,7 @@ router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
         });
     }
     //只有小时全选
-    else if(day != 'all' && hour == 'all'){
+    else if (day != 'all' && hour == 'all') {
         OIModel.find({
             start_date: day,
         }, function (err, data) {
@@ -195,7 +246,7 @@ router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
         });
     }
     //都不全选
-    else{
+    else {
         OIModel.find({
             start_date: day,
             start_hour: hour,
