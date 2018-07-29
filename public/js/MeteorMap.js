@@ -9,7 +9,7 @@ var PlaneView = (function () {
             var chartsContainer = overlay.getEchartsContainer();
             var myChart = overlay.initECharts(chartsContainer);
             let ProValue_arr = [],
-                value_obj = {},
+                value_obj = {},//订单数量
                 timeDif_obj = {};
             xy_data.forEach(element => {
                 value_obj[element.province] = 0;
@@ -20,6 +20,7 @@ var PlaneView = (function () {
                 }
                 ProValue_arr.push(curobj);
             })
+            //计算个省份的平均推送时间
             chosenData.forEach(element => {
                 value_obj[element.province] += 1;
                 timeDif_obj[element.province] += parseFloat(element.timeDif);
@@ -37,8 +38,9 @@ var PlaneView = (function () {
             })
             console.log('maxAve_time: ', maxAve_time);
             console.log('max_value: ', max_value);
-            //设置半径和飞机到达指定地点的时间比例尺
+            //设置半径和飞机到达指定地点的时间和飞机大小比例尺
             var radiusScale = d3.scaleLinear().domain([0, max_value]).range([0, 20]);
+            var PlaneSizeScale = d3.scaleLinear().domain([0, max_value]).range([5, 15]);
             var timeScale = d3.scaleLinear().domain([0, maxAve_time]).range([0, 10]);
             console.log('ProValue_arr: ', ProValue_arr);
             //************数据处理*****************
@@ -52,6 +54,7 @@ var PlaneView = (function () {
             }
             geoCoordMap["下沙"] = [120.357546, 30.319716]
             //console.log(geoCoordMap)
+
             //根据事件来分组数据
             var wh_5 = new Array;
             var xiashacang = {
@@ -64,15 +67,15 @@ var PlaneView = (function () {
                     use1["name"] = ProValue_arr[i].province;
                     use1["value"] = ProValue_arr[i].value;
                     use1["ave_time"] = ProValue_arr[i].ave_time;
+
                     wh_5[n1] = [xiashacang, use1];
                     n1++;
                 }
             }
+
+
             console.log('wh_5: ', wh_5);
-            var test = [];
-            for (var i = 0; i < ProValue_arr.length; i++) {
-                test.push(i);
-            }
+
             //var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
             var planePath =
                 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
@@ -92,52 +95,90 @@ var PlaneView = (function () {
                 }
                 return res;
             };
-            var color = ['#FE7787']; //配置颜色
-            var series = [];
-            [
-                ['下沙仓', wh_5]
-            ].forEach(function (item, i) { //&&与后方标记处相匹配
-                series.push({
-                    name: item[0],
+
+            //将每架飞机都作为一个serise对象
+            var planeData_arr = [];
+
+            for (var i = 0; i < ProValue_arr.length; i++) {
+                if (ProValue_arr[i].value > 0) {
+                    var temp_arr = [];
+                    var use1 = new Object;
+                    use1["name"] = ProValue_arr[i].province;
+                    use1["value"] = ProValue_arr[i].value;
+                    use1["ave_time"] = ProValue_arr[i].ave_time;
+                    temp_arr.push([xiashacang, use1]);
+                    planeData_arr.push(temp_arr);
+                }
+            }
+            //生成飞机对象数组
+            var planeObj_arr = [];
+            for (var i = 0; i < planeData_arr.length; i++) {
+                let cur_data = planeData_arr[i];    
+                console.log('cur_data: ', cur_data);
+                let temp_obj = {
+                    name: cur_data[0][0].name,
+                    type: 'lines',
+                    zlevel: 2,
+                    effect: {
+                        show: true,
+                        period: timeScale(cur_data[0][1].ave_time), //特效动画的时间，单位为 s。
+                        trailLength: 0,
+                        color: "#6079FF", //飞机颜色
+                        symbol: planePath, //飞行物
+                        symbolSize: PlaneSizeScale(cur_data[0][1].value) //飞机大小
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: "black",
+                            width: 0,
+                            opacity: 0.1,
+                            curveness: 0.2
+                        }
+                    },
+                    symbolSize: 50,
+                    data: convertData(planeData_arr[i])
+                };
+                planeObj_arr.push(temp_obj);
+
+            }
+            //飞机轨迹对象数组
+            var trackObj_arr = [];
+            for (var i = 0; i < planeData_arr.length; i++) {
+                let cur_data = planeData_arr[i];    
+
+                let temp_obj = {
+                    name: cur_data[0][0].name,
                     type: 'lines',
                     zlevel: 1,
                     effect: {
                         show: true,
-                        period: 6,
+                        period: timeScale(cur_data[0][1].ave_time),
                         trailLength: 0.7,
                         color: '#A0B1FF',
                         symbolSize: 2 //球大小
                     },
                     lineStyle: {
                         normal: {
-                            color: color[i],
+                            color: "black",
                             width: 0,
                             curveness: 0.2
                         }
                     },
-                    data: convertData(item[1])
-                }, {
-                    name: item[0],
-                    type: 'lines',
-                    zlevel: 2,
-                    effect: {
-                        show: true,
-                        period: 6, //特效动画的时间，单位为 s。
-                        trailLength: 0,
-                        color: "#6079FF", //飞机颜色
-                        symbol: planePath, //飞行物
-                        symbolSize: 10 //飞机大小
-                    },
-                    lineStyle: {
-                        normal: {
-                            color: color[i],
-                            width: 0,
-                            opacity: 0.1,
-                            curveness: 0.2
-                        }
-                    },
-                    data: convertData(item[1])
-                }, {
+                    data: convertData(planeData_arr[i])
+                };
+                trackObj_arr.push(temp_obj);
+
+            }
+
+
+
+            console.log('planeObj_arr.length: ', planeObj_arr);
+            var color = ['#FE7787']; //配置颜色
+            var series = [];
+            [
+                ['下沙仓', wh_5]
+            ].forEach(function (item, i) { //&&与后方标记处相匹配
+                series.push( {
                     name: item[0],
                     type: 'effectScatter',
                     coordinateSystem: 'geo',
@@ -171,7 +212,12 @@ var PlaneView = (function () {
                     })
                 });
             });
+            for (var s = 0; s < planeObj_arr.length; s++) {
+                series.push(planeObj_arr[s]);
+                series.push(trackObj_arr[s]);
 
+                console.log('planeObj_arr[s]: ', planeObj_arr[s]);
+            }
             option = {
                 title: {},
                 tooltip: {
@@ -216,3 +262,27 @@ var PlaneView = (function () {
         DrawPlaneView: DrawPlaneView,
     }
 })()
+
+// , {
+//     name: item[0],
+//     type: 'lines',
+//     zlevel: 2,
+//     effect: {
+//         show: true,
+//         period: 6, //特效动画的时间，单位为 s。
+//         trailLength: 0,
+//         color: "#6079FF", //飞机颜色
+//         symbol: planePath, //飞行物
+//         symbolSize: 10 //飞机大小
+//     },
+//     lineStyle: {
+//         normal: {
+//             color: color[i],
+//             width: 0,
+//             opacity: 0.1,
+//             curveness: 0.2
+//         }
+//     },
+//     symbolSize: 50,
+//     data: convertData(item[1])
+// }

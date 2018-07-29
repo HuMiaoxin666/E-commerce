@@ -16,19 +16,33 @@ var mapView = (function () {
         //访问令牌
     }).addTo(map);
     //初始化界面
-    
+
     getData('5', '服饰鞋靴').then(function (data) {
-        if (options.heat_plane == true)
+        variable.chart_data = data;
+        variable.chosen_data = data;
+        variable.heat_data = data;
+        if (variable.heat_plane == true)
             Heatmap(data);
         else
-            PlaneView.DrawPlaneView(data);
+          PlaneView.DrawPlaneView(data);
         options.AddOptions(data);
         lineChart.drawLineChart(data);
         rectView.DrawRectView(data);
 
     })
     //全局变量
-    var part_all = true;
+    // var part_all = true;
+    L.easyButton('<strong>All</strong>', function (controlArg, mapArg) {
+        variable.part_all = false;
+        Heatmap(variable.heat_data);
+        console.log('map_data: ', variable.heat_data);
+    }).addTo(map);
+    L.easyButton('<strong>Pt</strong>', function (controlArg, mapArg) {
+        variable.part_all = true;
+        Heatmap(variable.heat_data);
+        console.log('map_data: ', variable.heat_data);
+    }).addTo(map);
+
     function Heatmap(chosenData) {
         console.log('chosenData: ', chosenData);
         // $("#planeJs").remove();
@@ -65,7 +79,7 @@ var mapView = (function () {
                 if (allAdress[t].value > 0)
                     heatData.push([allAdress[t].lat, allAdress[t].lng, allAdress[t].value])
             }
-            if(part_all == true){
+            if (variable.part_all == true) {
                 let max_value = d3.max(heatData, function (d) {
                     return d[2];
                 })
@@ -74,11 +88,11 @@ var mapView = (function () {
                 })
                 //定义值比例尺
                 var valueScale = d3.scaleLinear().domain([min_value, max_value]).range([10, 5000]);
-                heatData.forEach(element=>{
+                heatData.forEach(element => {
                     element[2] = valueScale(element[2]);
                 })
             }
-           
+
             console.log('allAdress: ', allAdress);
             console.log('heatData: ', heatData);
             var heat = L.heatLayer(heatData, {

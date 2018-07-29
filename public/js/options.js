@@ -1,12 +1,14 @@
 var options = (function () {
-    var heat_plane = true; //为true时画热力图
+    // var heat_plane = true; //为true时画热力图
     var WhStatus = "wh_5"; //判断当前被选中的仓库
     var CgStatus = "cg_1"; //判断当前被选中的种类的index字符串
     var WH_index = WhStatus[WhStatus.length - 1];; //初始化被选中的仓库（默认全选）
     var CG_index = parseInt(CgStatus[CgStatus.length - 1]) - 1; //被选中的物品种类index
-    var cgName_arr = ["服饰鞋靴", "环球美食", "家居个护", "美容彩妆", "母婴用品", "营养保健",'']; //用于匹配物品种类的的数组
+    var cgName_arr = ["服饰鞋靴", "环球美食", "家居个护", "美容彩妆", "母婴用品", "营养保健", '']; //用于匹配物品种类的的数组
     var CG_name = '服饰鞋靴' //初始化被选中的物品种类名称（默认全选）
+    var op_data;
     // 初始化状态
+
     $("#" + WhStatus).css({
         "color": "#007bff",
         "background-color": "#F0F0F0"
@@ -18,28 +20,39 @@ var options = (function () {
     });
     //给热力图和飞机图添加点击事件
     $("#heatMap").click(function () {
-        $("#"+this.id).attr("class","nav-link active");
-        $("#planeView").attr("class","nav-link");
-        heat_plane = true;
+        $("#" + this.id).attr("class", "nav-link active");
+        $("#planeView").attr("class", "nav-link");
+        variable.heat_plane = true;
         // mapView.getData(WH_index, CG_name).then(function (data) {
         //     mapView.Heatmap(data);
         // });
-        GetData(WH_index, CG_name);
+        if (variable.heat_plane == true)
+            mapView.Heatmap(variable.heat_data);
+        else
+            PlaneView.DrawPlaneView(variable.chosen_data);
+
     })
     $("#planeView").click(function () {
-        $("#"+this.id).attr("class","nav-link active");
-        $("#heatMap").attr("class","nav-link");
-        heat_plane = false;
+
+        $("#" + this.id).attr("class", "nav-link active");
+        $("#heatMap").attr("class", "nav-link");
+        variable.heat_plane = false;
         // mapView.getData(WH_index, CG_name).then(function (data) {
         //     PlaneView.DrawPlaneView(data);
         // });
-        GetData(WH_index, CG_name);
+        if (variable.heat_plane == true)
+            mapView.Heatmap(variable.heat_data);
+        else
+            PlaneView.DrawPlaneView(variable.chosen_data);
     })
     //读取数据库获取数据操作
     function GetData(WH_index, CG_name) {
         mapView.getData(WH_index, CG_name).then(function (data) {
+            variable.chosen_data = data;
+            op_data = data;
+            variable.heat_data = data;
             console.log("Search data competion !");
-            if (heat_plane == true)
+            if (variable.heat_plane == true)
                 mapView.Heatmap(data);
             else
                 PlaneView.DrawPlaneView(data);
@@ -47,7 +60,6 @@ var options = (function () {
             rectView.DrawRectView(data);
         });
     }
-
     //添加仓库悬浮事件和点击事件
     //仓库全选
     // $("#all_wh").click(function () {
@@ -224,7 +236,7 @@ var options = (function () {
         GetData: GetData,
         WhStatus: WH_index,
         type: CG_name,
-        AddOptions:AddOptions,
-        heat_plane: heat_plane
+        AddOptions: AddOptions,
+        // heat_plane: heat_plane,
     };
 })();

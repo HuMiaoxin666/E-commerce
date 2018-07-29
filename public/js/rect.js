@@ -1,4 +1,5 @@
 var rectView = (function () {
+
     function DrawRectView(chosenData) {
         //全局变量
         var color_selected = "#007bff";
@@ -12,7 +13,7 @@ var rectView = (function () {
         $("#heatMap").click(function () {
             $("#" + this.id).attr("class", "nav-link active");
             $("#planeView").attr("class", "nav-link");
-            options.heat_plane = true;
+            variable.heat_plane = true;
             // mapView.getData(WH_index, CG_name).then(function (data) {
             //     mapView.Heatmap(data);
             // });
@@ -20,8 +21,8 @@ var rectView = (function () {
         $("#planeView").click(function () {
             $("#" + this.id).attr("class", "nav-link active");
             $("#heatMap").attr("class", "nav-link");
-            options.heat_plane = false;
-            console.log('heat_plane: ', options.heat_plane);
+            variable.heat_plane = false;
+            console.log('heat_plane: ', variable.heat_plane);
             // mapView.getData(WH_index, CG_name).then(function (data) {
             //     PlaneView.DrawPlaneView(data);
             // });
@@ -139,10 +140,14 @@ var rectView = (function () {
                 //跟新热力图或飞机图和折线图
 
                 getTimeData("", cur_hour, options.WhStatus, options.type).then(function (data) {
+                    //重新赋值当前的变量
+                    variable.chosen_data = data;
+                    variable.heat_data = data;
+
                     console.log(' options.type: ', options.type);
                     console.log('options.WhStatus: ', options.WhStatus);
-                    console.log('heat_plane: ', options.heat_plane);
-                    if (options.heat_plane == true)
+                    console.log('heat_plane: ', variable.heat_plane);
+                    if (variable.heat_plane == true)
                         mapView.Heatmap(data);
                     else
                         PlaneView.DrawPlaneView(data);
@@ -150,6 +155,8 @@ var rectView = (function () {
                     options.AddOptions(data);
                 });
                 getTimeOnlyData('', cur_hour).then(function (data) {
+                    variable.chart_data = data;
+
                     console.log('only time data: ', data);
                     lineChart.drawLineChart(data)
                 });
@@ -203,9 +210,12 @@ var rectView = (function () {
                 })
                 //跟新热力图或飞机图和折线图
                 getTimeData(cur_day, '', options.WhStatus, options.type).then(function (data) {
+                    variable.heat_data = data;
+                    variable.chosen_data = data;
+
                     console.log(' options.type: ', options.type);
                     console.log('options.WhStatus: ', options.WhStatus);
-                    if (options.heat_plane == true)
+                    if (variable.heat_plane == true)
                         mapView.Heatmap(data);
                     else
                         PlaneView.DrawPlaneView(data);
@@ -213,6 +223,8 @@ var rectView = (function () {
                     options.AddOptions(data);
                 });
                 getTimeOnlyData(cur_day, '').then(function (data) {
+                    variable.chart_data = data;
+
                     console.log('only time data: ', data);
                     lineChart.drawLineChart(data)
                 })
@@ -268,10 +280,13 @@ var rectView = (function () {
             var cur_time = this.id.split("_");
             console.log('cur_time: ', cur_time);
             getTimeData(cur_time[0], cur_time[1], options.WhStatus, options.type).then(function (data) {
+                variable.chosen_data = data;
+                variable.heat_data = data;
+
                 console.log(' options.type: ', options.type);
                 console.log('options.WhStatus: ', options.WhStatus);
-                console.log('heat_plane: ', options.heat_plane);
-                if (options.heat_plane == true)
+                console.log('heat_plane: ', variable.heat_plane);
+                if (variable.heat_plane == true)
                     mapView.Heatmap(data);
                 else
                     PlaneView.DrawPlaneView(data);
@@ -279,9 +294,11 @@ var rectView = (function () {
                 options.AddOptions(data);
             });
             getTimeOnlyData(cur_time[0], cur_time[1]).then(function (data) {
+                variable.chart_data = data;
                 console.log('only time data: ', data);
                 lineChart.drawLineChart(data)
             })
+            console.log(" variable.chosen_data",variable.chosen_data);
         })
         //画Colorbar
         var defs = svgRect.append("defs");
