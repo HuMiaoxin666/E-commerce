@@ -4,8 +4,11 @@ var variable = (function () {
     var heat_plane = true;
     var chosen_data;//所选中的数据
     var chart_data;//表格所需数据
-    var type;
-    var WH_index;
+    var type = "服饰鞋靴";
+    var day;
+    var hour;
+    var WH_index  ="5";
+    var selectAll = false;
     return {
         heat_data:heat_data,
         part_all:part_all,
@@ -13,6 +16,9 @@ var variable = (function () {
         chosen_data:chosen_data,
         chart_data:chart_data,
         type:type,
-        WH_index:WH_index
+        WH_index:WH_index,
+        day:day,
+        hour:hour,
+        selectAll:selectAll
     }
 })()

@@ -1,0 +1,150 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="hh/images/icons/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="hh/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="hh/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="hh/fonts/iconic/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" type="text/css" href="hh/vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="hh/vendor/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css" href="hh/vendor/animsition/css/animsition.min.css">
+<link rel="stylesheet" type="text/css" href="hh/vendor/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="hh/vendor/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="hh/vendor/noui/nouislider.min.css">
+<link rel="stylesheet" type="text/css" href="hh/css/util.css">
+<link rel="stylesheet" type="text/css" href="hh/css/main.css">
+<style>
+    #heading {
+        padding-top: 8px;
+        width: 100%;
+        height: 7%;
+        margin: 0 auto 0% auto;
+        background-color: rgba(10, 0, 148, 0.719);
+    }
+</style>
+
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" id="heading">
+
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="padding:0;">
+        海仓科技
+    </a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/login">注销</a>
+        </li>
+    </ul>
+</nav>
+<div class='panel panel-default' style='width:15%;float:left;'>
+    <a href='#' style='width:100%;display:inline-block;text-align: left;padding-left:30px;padding-top:10px;font-size:20px;'>
+        数据直报系统
+        <a/>
+        <a id = "all_admin" href='/admin' style='width:100%;display:inline-block;text-align: left;padding-left:30px;padding-top:5px;font-size:20px;'>
+            数据管理系统
+            <a/>
+            <a id = "all_vis" href='/' style='width:100%;display:inline-block;text-align: left;padding-left:30px;padding-top:5px;font-size:20px;'>
+                数据可视化系统
+                <a/>
+
+
+</div>
+
+<div class="container-contact100" style='width:85%;float:right;margin:0px;padding:3px;'>
+    <div class="wrap-contact100" style='padding-left:5px;width:98%;'>
+        <form class="contact100-form validate-form">
+            <span class="contact100-form-title">
+                数据直报系统
+            </span>
+
+            <div class="wrap-input100 validate-input bg1" data-validate="请输入商家公司名称">
+                <span class="label-input100">商家公司名称 *</span>
+                <input class="input100" type="text" name="name" placeholder="请输入商家公司名称">
+            </div>
+
+
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="请输入主营类目">
+                <span class="label-input100">主营类目 *</span>
+                <input class="input100" type="text" name="type" placeholder="请输入主营类目">
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="请输入日均单量">
+                <span class="label-input100">日均单量</span>
+                <input class="input100" type="text" name="number" placeholder="请输入日均单量">
+            </div>
+
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="请输入口岸/城市">
+                <span class="label-input100">口岸/城市 *</span>
+                <input class="input100" type="text" name="city" placeholder="请输入口岸/城市">
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="请输入贸易类型">
+                <span class="label-input100">贸易类型 *</span>
+                <input class="input100" type="text" name="type" placeholder="请输入贸易类型">
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="请输入序号">
+                <span class="label-input100">手机号 </span>
+                <input class="input100" type="text" name="phone" placeholder="请输入序号">
+            </div>
+
+            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="请输入客户等级划分">
+                <span class="label-input100">客户等级划分 *</span>
+                <input class="input100" type="text" name="level" placeholder="请输入客户等级划分">
+            </div>
+
+
+
+            <div class="wrap-input100 validate-input bg0 rs1-alert-validate">
+                <span class="label-input100">备注</span>
+                <textarea class="input100" name="message" placeholder="请输入备注信息"></textarea>
+            </div>
+
+            <div class="container-contact100-form-btn">
+                <button class="contact100-form-btn" id='submitButton' data-toggle="modal" data-target="#myModal">
+                    <span>
+                        提交
+                        <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">数据直报</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            提交成功！
+                        </div>
+                        <div class="modal-footer" style='float: left;'>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="hh/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="hh/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="hh/vendor/bootstrap/js/popper.js"></script>
+<script src="hh/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="hh/vendor/select2/select2.min.js"></script>
+
+<script src="hh/vendor/daterangepicker/moment.min.js"></script>
+<script src="hh/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="hh/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="hh/vendor/noui/nouislider.min.js"></script>
+<script src="hh/js/main.js"></script>
+<script src="js/allControl.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>

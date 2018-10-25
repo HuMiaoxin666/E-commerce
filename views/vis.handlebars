@@ -1,0 +1,214 @@
+<link href="css/bootstrap-switch.min.css" rel="stylesheet">
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+<link href="css/easy-button.css" rel="stylesheet" />
+
+<link href="css/leaflet.css" rel="stylesheet" />
+<link href='css/mapbox-gl.css' rel='stylesheet' />
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/dashboard.css" type="text/css" rel="stylesheet">
+<link href="css/bootstrap-combobox.css" type="text/css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet" type="text/css">
+
+<title>E-Commerce</title>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+
+<script src="js/pixi.min.js"></script>
+<script src="js/leaflet.min.js"> </script>
+<script src="js/d3.v4.min.js"></script>
+<script src='js/mapbox-gl.js'></script>
+<script src="js/echarts.js"></script>
+
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/main.min.js" id="planeJs"></script>
+<script src="js/leaflet-heat.js"></script>
+
+<script src="js/easy-button.js"></script>
+<nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0" style="background-color:#2ebaed">
+    <h5 class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" style = "margin-bottom:0%">海仓数据可视化</h5>
+    <nav class="nav nav-masthead justify-content-center" style="position:absolute;left:20%;">
+        <a class="nav-link active" href="#" id="heatMap" style="font-weight:600;">热力图</a>
+        <a class="nav-link" href="#" id="planeView" style="font-weight:600;">动态运输图</a>
+    </nav>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block  sidebar">
+            <div class="sidebar-sticky" style="background-color:#6fd2f7">
+                <div class="card box-shadow" style=";padding-top:;border-radius: 0.5rem;">
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 text-muted" style="border-bottom:2px solid rgb(184, 183, 183)!important;border-top-right-radius: 0.5rem;border-top-left-radius: 0.5rem;">
+                        <span style="font-size:1.5em;color:black;">仓库选择</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_1" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="home"></span>
+                                宁波
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_2" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file"></span>
+                                郑州
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_3" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="shopping-cart"></span>
+                                重庆
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_5" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="bar-chart-2"></span>
+                                杭州下沙
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="wh_7" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="home"></span>
+                                全选
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <div class="card box-shadow" style="padding-top:;border-radius: 0.5rem;margin-top:1px;">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 text-muted" style="border-bottom:2px solid rgb(184, 183, 183)!important;border-top-right-radius: 0.5rem;border-top-left-radius: 0.5rem;">
+                        <span style="font-size:1.5em;color:black ; ">物品分类</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+
+                        <li class="nav-item pt-0">
+                            <a class="nav-link" href="#" id="cg_1" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                服饰鞋靴
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_2" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                环球美食
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_3" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                家居个护
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_4" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                美容彩妆
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_5" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                母婴用品
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_6" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                营养保健
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="cg_7" style="color:rgb(121, 120, 120);font-size:1.2em;">
+                                <span data-feather="file-text"></span>
+                                全选
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card box-shadow " style="border-radius: 0.5rem;margin-top:1px;">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1  text-muted" style="border-bottom:2px solid rgb(184, 183, 183)!important;border-top-right-radius: 0.5rem;border-top-left-radius: 0.5rem;margin-bottom:0;">
+                        <span style="font-size:1.5em;color:black">订单信息</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-2 text-muted">
+                        <span style="font-size:1.2em;">订单编号</span>
+
+                    </a>
+                    <div class="form-group" style="margin-bottom:0%;">
+                        <select class="form-control" style="font-size:.8rem;" id="orderNum">
+                            <option></option>
+                        </select>
+                    </div>
+
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 text-muted">
+                        <span style="font-size:1.2em;">用户 :</span>
+                        <input type="text" class="inputText" id="id">
+                    </a>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2  text-muted">
+                        <span style="font-size:1.2em;">仓库 :</span>
+                        <input type="text" class="inputText" id="warehouse">
+                    </a>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2  text-muted">
+                        <span style="font-size:1.2em;">支付时间 :</span>
+                        <input type="text" class="inputText" id="startTime">
+                    </a>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 text-muted">
+                        <span style="font-size:1.2em;">推送时间 :</span>
+                        <input type="text" class="inputText" id="endTime">
+                    </a>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2  text-muted">
+                        <span style="font-size:1.2em;">商品名称 :</span>
+                    </a>
+                    <input type="text" class="inputText" style="font-size:.8em;" id="name">
+                    </span>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2  text-muted">
+                        <span style="font-size:1.2em;">购买数量 :</span>
+                        <input type="text" class="inputText" id="qty">
+                    </a>
+                    <a class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-2 text-muted">
+                        <span style="font-size:1.2em;">收货地址 :</span>
+                        <input type="text" class="inputText" id="address">
+                    </a>
+                </div>
+
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 " id="main" style="padding-left:0px;">
+
+            <div id="map"></div>
+            <div id="lineChartOut">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 border-bottom" style="background-color:#2ebaed;color:white">
+                    物品分类统计图</h6>
+
+                <div id="lineChart"></div>
+            </div>
+            <div id="rect">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pt-1 pb-1 border-bottom" style="background-color:#2ebaed;margin-bottom:0%;color:white">
+                    时序热力图</h6>
+                <svg id="rectSvg"></svg>
+            </div>
+        </main>
+        </div>
+    </div>
+    <script src="js/variable.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/lineChart.js"></script>
+    <script src="js/mapview.js"></script>
+    <script src="js/MeteorMap.js"></script>
+    <script src="js/rect.js"></script>
