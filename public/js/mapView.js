@@ -139,7 +139,7 @@ var mapView = (function () {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/" + "warehouse" + '/' + "type" + "/orderInfor",
+                url: "/vis/" + "warehouse" + '/' + "type" + "/orderInfor",
                 data: {
                     warehouse: warehouse,
                     type: type,

@@ -53,7 +53,7 @@ router.get("/(:warehouse)?/(:type)?/orderInfor", function (req, res) {
         }, function (err, data) {
             if (err) console.log(err);
             else {
-                res.send(data);
+                res.json(data);
             }
         });
     }
