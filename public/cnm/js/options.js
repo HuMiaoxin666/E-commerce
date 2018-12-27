@@ -186,7 +186,7 @@ var options = (function () {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/" + orderNum + "/" + cgType + '/0' + "/orderInfor",
+                url: "/vis/" + orderNum + "/" + cgType + '/0' + "/orderInfor",
                 data: {
                     orderNum: orderNum,
                     type: cgType

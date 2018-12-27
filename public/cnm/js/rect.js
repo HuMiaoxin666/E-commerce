@@ -378,7 +378,7 @@ var rectView = (function () {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/" + "day" + '/' + "hour" + '/' + warehouse + '/' + type + "/rectClick",
+                url: "/vis/" + "day" + '/' + "hour" + '/' + warehouse + '/' + type + "/rectClick",
                 data: {
                     day: day,
                     hour: hour,
@@ -399,7 +399,7 @@ var rectView = (function () {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 type: "get",
-                url: "/" + "day" + '/' + "hour" + "/rectClickTime",
+                url: "/vis/" + "day" + '/' + "hour" + "/rectClickTime",
                 data: {
                     day: day,
                     hour: hour,
