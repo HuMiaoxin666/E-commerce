@@ -2,7 +2,7 @@
 const mongoose= require('mongoose');
 mongoose.connect('mongodb://localhost:27017/E-commerce',{useNewUrlParser: true}).then(
     (res) =>{
-        console.log("Connected to Daabase Successfully !")
+        console.log("Connected to Database Successfully !")
     }
     ).catch(
         ()=>{

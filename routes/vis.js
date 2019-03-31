@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var OIModel = require("../models/decl_po");
-var TestModel = require("../models/test_co");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -59,6 +58,8 @@ router.get("/(:warehouse)?/(:type)?/orderInfor", function (req, res) {
     }
 
 });
+
+
 router.get("/(:orderNum)?/(:type)?/0/orderInfor", function (req, res) {
     console.log('req.query: ', req.query);
     let orderNum = req.query.orderNum;
@@ -201,14 +202,13 @@ router.get("/(:day)?/(:hour)?/(:warehouse)?/(:type)?/rectClick", function (req, 
             });
         }
     }
-
-
 });
+
+
 router.get("/(:day)?/(:hour)?/rectClickTime", function (req, res) {
     console.log('req.query: ', req.query);
     let day = req.query.day;
     let hour = req.query.hour;
-
     console.log('hour: ', hour);
     console.log('day: ', day);
     //都全选

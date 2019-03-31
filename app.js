@@ -10,7 +10,6 @@ var adminRouter = require('./routes/administrator');
 var loginRouter = require('./routes/login');
 var allRouter = require('./routes/allControl');
 
-var handlebars = require('handlebars');
 var exphbs = require('express-handlebars');
 var hbs = exphbs.create({
   defaultLayout: 'main',
